@@ -11,5 +11,8 @@ fi;
 
 for MODIFIED_FILE in `git status --porcelain | cut -d " " -f3`;
 do
-    exec pep8 --max-line-length=120 $MODIFIED_FILE;
+    if [[ `file $MODIFIED_FILE` = 'a python script text executable' ]]
+    then
+        exec pep8 --max-line-length=120 $MODIFIED_FILE;
+    fi;
 done;
