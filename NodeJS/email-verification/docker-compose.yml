@@ -1,0 +1,13 @@
+version: '2'
+services:
+    email-verificator:
+        build: .
+        ports:
+         - "3000:3000"
+        volumes:
+         - .:/email-verificator
+        depends_on:
+         - redis
+        command: npm start
+    redis:
+        image: redis
