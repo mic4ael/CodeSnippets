@@ -6,7 +6,6 @@ import math
 import sys
 
 import pygame
-from pygame import locals
 
 
 def collision(rleft, rtop, width, height, center_x, center_y, radius):
@@ -110,8 +109,8 @@ class PingPong(object):
         self._opponent = Opponent(595, 150)
         self._ball = Ball(305, 215)
         self._event_handlers = {
-            locals.QUIT: self._handle_quit,
-            locals.KEYDOWN: self._handle_key
+            pygame.locals.QUIT: self._handle_quit,
+            pygame.locals.KEYDOWN: self._handle_key
         }
 
     def run(self):
@@ -135,9 +134,9 @@ class PingPong(object):
         sys.exit()
 
     def _handle_key(self, evt):
-        if evt.key == locals.K_DOWN:
+        if evt.key == pygame.locals.K_DOWN:
             self._player.move_down(surface)
-        elif evt.key == locals.K_UP:
+        elif evt.key == pygame.locals.K_UP:
             self._player.move_up(surface)
 
     def _redraw(self):
