@@ -2,39 +2,10 @@
 
 from __future__ import unicode_literals
 
-import math
 import sys
 
 import pygame
 import pygame.locals
-
-
-def collision(rleft, rtop, width, height, center_x, center_y, radius):
-    # complete boundbox of the rectangle
-    rright, rbottom = rleft + width / 2, rtop + height / 2
-
-    # bounding box of the circle
-    cleft, ctop = center_x - radius, center_y - radius
-    cright, cbottom = center_x + radius, center_y + radius
-
-    # trivial reject if bounding boxes do not intersect
-    if rright < cleft or rleft > cright or rbottom < ctop or rtop > cbottom:
-        return False  # no collision possible
-
-    # check whether any point of rectangle is inside circle's radius
-    for x in (rleft, rleft + width):
-        for y in (rtop, rtop + height):
-            # compare distance between circle's center point and each point of
-            # the rectangle with the circle's radius
-            if math.hypot(x - center_x, y - center_y) <= radius:
-                return True  # collision detected
-
-    # check if center of circle is inside rectangle
-    if rleft <= center_x <= rright and rtop <= center_y <= rbottom:
-        return True  # overlaid
-
-    return False  # no collision detected
-
 
 white_color = pygame.Color(255, 255, 255)
 
@@ -71,7 +42,9 @@ class Player(Drawable):
         self.dir = -1
 
     def intersects(self, ball):
-        return collision(self._x, self._y, 20, 100, ball._x, ball._y, ball._radius)
+        player_rect = pygame.Rect(self._x, self._y, 20, 100)
+        ball_rect = pygame.Rect(ball._x, ball._y, ball._radius, ball._radius)
+        return player_rect.colliderect(ball_rect)
 
 
 class Opponent(Drawable):
@@ -81,6 +54,11 @@ class Opponent(Drawable):
 
     def draw(self, surface):
         pygame.draw.rect(surface, white_color, (self._x, self._y, 20, 100))
+
+    def intersects(self, ball):
+        player_rect = pygame.Rect(self._x, self._y, 20, 100)
+        ball_rect = pygame.Rect(ball._x, ball._y, ball._radius, ball._radius)
+        return player_rect.colliderect(ball_rect)
 
 
 class Ball(Drawable):
@@ -126,7 +104,7 @@ class PingPong(object):
             for event in pygame.event.get():
                 self._handle_event(event)
 
-            if self._player.intersects(self._ball):
+            if self._player.intersects(self._ball) or self._opponent.intersects(self._ball):
                 self._ball._dir_x *= -1
 
             self._redraw()
