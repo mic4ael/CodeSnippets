@@ -47,18 +47,12 @@ class Player(Drawable):
         return player_rect.colliderect(ball_rect)
 
 
-class Opponent(Drawable):
+class Opponent(Player):
     def __init__(self, x, y):
-        super(Opponent, self).__init__(x, y)
-        self._name = 'Computer'
+        super(Opponent, self).__init__(x, y, 'Computer')
 
     def draw(self, surface):
         pygame.draw.rect(surface, white_color, (self._x, self._y, 20, 100))
-
-    def intersects(self, ball):
-        player_rect = pygame.Rect(self._x, self._y, 20, 100)
-        ball_rect = pygame.Rect(ball._x, ball._y, ball._radius, ball._radius)
-        return player_rect.colliderect(ball_rect)
 
 
 class Ball(Drawable):
