@@ -8,6 +8,7 @@ import pygame
 import pygame.locals
 
 white_color = pygame.Color(255, 255, 255)
+black_color = pygame.Color(0, 0, 0)
 
 
 class Drawable(object):
@@ -120,6 +121,15 @@ class PingPong(object):
             self._player.move_up(surface)
 
     def _redraw(self):
+        width, height = surface.get_width(), surface.get_height()
+        half_width = width / 2 - 5
+        color = white_color
+        for x in range(0, height + 1, 20):
+            pygame.draw.line(surface, color, [half_width, x], [half_width, x + 20], 10)
+            if color == white_color:
+                color = black_color
+            else:
+                color = white_color
         self._player.draw(surface)
         self._ball.draw(surface)
         self._opponent.draw(surface)
