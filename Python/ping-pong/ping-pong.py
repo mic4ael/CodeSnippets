@@ -6,6 +6,7 @@ import math
 import sys
 
 import pygame
+import pygame.locals
 
 
 def collision(rleft, rtop, width, height, center_x, center_y, radius):
@@ -51,20 +52,26 @@ class Player(Drawable):
     def __init__(self, x, y, name):
         super(Player, self).__init__(x, y)
         self._name = name
+        self.dir = 0
 
     def draw(self, surface):
+        if self.dir == 1:
+            if self._y + 105 < surface.get_height():
+                self._y += 3
+        elif self.dir == -1:
+            if self._y - 15 >= 0:
+                self._y -= 3
+
         pygame.draw.rect(surface, white_color, (self._x, self._y, 20, 100))
 
     def move_down(self, surface):
-        if self._y + 15 < surface.get_height():
-            self._y += 15
+        self.dir = 1
 
     def move_up(self, surface):
-        if self._y - 15 >= 0:
-            self._y -= 15
+        self.dir = -1
 
     def intersects(self, ball):
-        return collision(self._x, self._y, 20, 100, ball._x, ball._y, 15)
+        return collision(self._x, self._y, 20, 100, ball._x, ball._y, ball._radius)
 
 
 class Opponent(Drawable):
@@ -121,9 +128,10 @@ class PingPong(object):
 
             if self._player.intersects(self._ball):
                 self._ball._dir_x *= -1
+
             self._redraw()
             pygame.display.update()
-            fps_clock.tick(30)
+            fps_clock.tick(60)
 
     def _handle_event(self, evt):
         if evt.type in self._event_handlers:
