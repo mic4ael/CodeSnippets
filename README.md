@@ -1,2 +1,2 @@
-# Programming Exercises
-Storage of all my toy scripts
+# Code Snippets
+Storage of all my code snippets.
