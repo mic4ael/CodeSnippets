@@ -1,0 +1,11 @@
+Product:
+    type: entity
+    table: products
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
