@@ -12,7 +12,6 @@ class UserRole implements Serializable {
         version(false)
     }
 
-
     static constraints = {
         role validator: { Role r, UserRole ur ->
             if (ur.user?.id) {

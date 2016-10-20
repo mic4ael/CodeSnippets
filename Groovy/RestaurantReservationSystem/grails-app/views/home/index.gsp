@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="main ui container">
-        <g:form class="ui form" id="login-form" name="" url="">
+        <g:form class="ui form" id="login-form" url="${context.requestPath}/login/authenticate">
             <div class="field">
                 <label><g:message code="labels.username"/></label>
                 <g:textField name="username"/>

@@ -12,7 +12,8 @@
     <asset:stylesheet src="application.css"/>
     <asset:stylesheet src="semantic.css"/>
 
-    <g:javascript src="semantic.js"/>
+    <asset:javascript src="jquery-2.2.0.min.js"/>
+    <asset:javascript src="semantic.js"/>
 
     <g:layoutHead/>
 </head>
