@@ -1,5 +1,3 @@
-grails.plugin.springsecurity.auth.loginFormUrl = "/login"
-
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
