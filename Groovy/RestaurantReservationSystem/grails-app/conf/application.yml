@@ -20,6 +20,10 @@ environments:
             dbCreate: create-drop
             url: jdbc:postgresql://127.0.0.1:5432/reservations
             username: postgres
+        recaptcha:
+            enabled: true
+            publicKey: "6Lci-wkUAAAAALDdzvYcLDiiZIAmPiqCnLDLINUy"
+            privateKey: ""
     test:
         dataSource:
             dbCreate: update
