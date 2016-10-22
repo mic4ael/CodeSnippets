@@ -8,7 +8,8 @@ class UrlMappings {
             }
         }
 
-        "/" (controller: "Home")
+        "/" (controller: 'Home')
+        "/register" (controller: 'Registration')
         "500" (view: '/error')
         "404" (view: '/notFound')
     }

@@ -18,7 +18,16 @@
                 <label><g:message code="labels.password"/></label>
                 <g:passwordField name="password"/>
             </div>
-            <g:submitButton class="ui button" name="login" value="${message(code: 'buttons.login')}"/>
+            <div class="ui two column grid">
+                <div class="column">
+                    <g:submitButton class="ui button" name="login" value="${message(code: 'buttons.login')}"/>
+                </div>
+                <div class="column">
+                    <a class="ui primary button right floated" href="${request.contextPath}/register">
+                        <g:message code="buttons.register"/>
+                    </a>
+                </div>
+            </div>
         </g:form>
     </div>
 </body>
