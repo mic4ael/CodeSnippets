@@ -1,6 +1,10 @@
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'pl.dmcs.nsai.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'pl.dmcs.nsai.UserRole'
+grails.plugin.springsecurity.authority.className = 'pl.dmcs.nsai.Role'
+
 grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
 grails.plugin.springsecurity.interceptUrlMap = [
-	[pattern: '/',               access: ['ROLE_USER']],
+	[pattern: '/',               access: ['isAuthenticated()']],
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/login/*',        access: ['permitAll']],
 	[pattern: '/index',          access: ['permitAll']],

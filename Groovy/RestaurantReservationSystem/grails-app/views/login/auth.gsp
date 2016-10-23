@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="main ui container">
-        <g:form class="ui form" id="login-form" url="${request.contextPath}/auth/login">
+        <g:form class="ui form" name="login-form" url="${request.contextPath}/login/authenticate">
+            <g:if test="${flash.message}">
+                <div class="ui message">
+                    <p>${flash.message}</p>
+                </div>
+            </g:if>
             <div class="field">
                 <label><g:message code="labels.username"/></label>
                 <g:textField name="username"/>
@@ -23,9 +28,9 @@
                     <g:submitButton class="ui button" name="login" value="${message(code: 'buttons.login')}"/>
                 </div>
                 <div class="column">
-                    <a class="ui primary button right floated" href="${request.contextPath}/register">
+                    <g:link url="[action: '', controller: 'register']" class="ui primary button right floated">
                         <g:message code="buttons.register"/>
-                    </a>
+                    </g:link>
                 </div>
             </div>
         </g:form>

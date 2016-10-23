@@ -7,23 +7,22 @@ import groovy.transform.EqualsAndHashCode
 @ToString(includes='username', includeNames=true, includePackage=true)
 class User implements Serializable {
     transient springSecurityService
-
-    static transients = ['springSecurityService']
-
     static mapping = {
         table('users')
         password(column: 'password')
     }
 
+    static transients = ['passwordConfirm', 'springSecurityService']
     static constraints = {
-        password(blank: false, password: true)
-        username(blank: false, unique: true)
+        username(minSize: 3, blank: false, unique: true)
+        password(minSize: 3, blank: false, password: true)
     }
 
     String username
     String password
+    String passwordConfirm
 
-    boolean enabled
+    boolean enabled = true
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired

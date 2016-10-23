@@ -10,6 +10,7 @@ appender('STDOUT', ConsoleAppender) {
 
 root(INFO, ['STDOUT'])
 logger("pl.dmcs.nsai", INFO, ["STDOUT"])
+logger("org.springframework.security", INFO, ["STDOUT"])
 
 def targetDir = BuildSettings.TARGET_DIR
 if (Environment.isDevelopmentMode() && targetDir) {

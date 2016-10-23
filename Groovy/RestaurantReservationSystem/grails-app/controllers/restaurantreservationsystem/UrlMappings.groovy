@@ -9,7 +9,9 @@ class UrlMappings {
         }
 
         "/" (controller: 'Home')
-        "/register" (controller: 'Registration')
+        "/register" (controller: 'Registration') {
+            action = [GET: "index", POST: "create"]
+        }
         "500" (view: '/error')
         "404" (view: '/notFound')
     }
