@@ -3,6 +3,7 @@ package pl.dmcs.nsai
 import groovy.transform.ToString
 import groovy.transform.EqualsAndHashCode
 
+
 @EqualsAndHashCode(includes='username')
 @ToString(includes='username', includeNames=true, includePackage=true)
 class User implements Serializable {
@@ -15,7 +16,11 @@ class User implements Serializable {
     static transients = ['passwordConfirm', 'springSecurityService']
     static constraints = {
         username(minSize: 3, blank: false, unique: true)
-        password(minSize: 3, blank: false, password: true)
+        password(minSize: 3, blank: false, password: true, validator: {val, obj ->
+            def passwordConfirm = obj.passwordConfirm
+            def isValid = (passwordConfirm == val || obj.springSecurityService.passwordEncoder.isPasswordValid(val, passwordConfirm, null))
+            return (isValid ? true : ['invalid.matchingpasswords'])
+        })
     }
 
     String username
