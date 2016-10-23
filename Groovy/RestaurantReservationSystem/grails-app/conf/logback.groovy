@@ -8,7 +8,8 @@ appender('STDOUT', ConsoleAppender) {
     }
 }
 
-root(DEBUG, ['STDOUT'])
+root(INFO, ['STDOUT'])
+logger("pl.dmcs.nsai", INFO, ["STDOUT"])
 
 def targetDir = BuildSettings.TARGET_DIR
 if (Environment.isDevelopmentMode() && targetDir) {
