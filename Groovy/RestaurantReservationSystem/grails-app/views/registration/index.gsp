@@ -25,9 +25,23 @@
                     </g:eachError>
                 </div>
             </g:hasErrors>
+            <div class="field ${hasErrors(bean: user, field: 'email', 'error')}">
+                <label><g:message code="labels.email"/></label>
+                <g:textField name="email" value="${user != null ? user.email : ''}"/>
+            </div>
+            <g:hasErrors bean="${user}" field="email">
+                <div class="ui message error">
+                    <div class="header">
+                        <g:message code="User.invalidEmail"/>
+                    </div>
+                    <g:eachError bean="${user}" field="email">
+                        <p><g:message error="${it}"/></p>
+                    </g:eachError>
+                </div>
+            </g:hasErrors>
             <div class="field ${hasErrors(bean: user, field: 'password', 'error')}">
                 <label><g:message code="labels.password"/></label>
-                <g:passwordField name="password" value="${user != null ? user.password : ''}"/>
+                <g:passwordField name="password"/>
             </div>
             <g:hasErrors bean="${user}" field="password">
                 <div class="ui message error">

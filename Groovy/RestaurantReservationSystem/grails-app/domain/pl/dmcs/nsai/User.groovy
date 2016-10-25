@@ -15,6 +15,7 @@ class User implements Serializable {
 
     static transients = ['passwordConfirm', 'springSecurityService']
     static constraints = {
+        email(blank: false, email: true)
         username(minSize: 3, blank: false, unique: true)
         password(minSize: 3, blank: false, password: true, validator: {val, obj ->
             def passwordConfirm = obj.passwordConfirm
@@ -24,6 +25,7 @@ class User implements Serializable {
     }
 
     String username
+    String email
     String password
     String passwordConfirm
 

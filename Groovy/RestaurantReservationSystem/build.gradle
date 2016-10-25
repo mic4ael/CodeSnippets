@@ -42,6 +42,7 @@ dependencyManagement {
 
 dependencies {
     compile "org.grails.plugins:recaptcha:3.0.1"
+    compile "org.grails.plugins:mail:2.0.0.RC6"
     compile "org.grails.plugins:spring-security-core:3.1.1"
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"

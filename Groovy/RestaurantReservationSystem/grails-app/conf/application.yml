@@ -60,6 +60,13 @@ grails:
     spring:
         transactionManagement:
             proxies: false
+    mail:
+        host: '127.0.0.1'
+        port: 1025
+        username: ''
+        password: ''
+        default:
+            from: 'no-reply@reservationsystem'
 info:
     app:
         name: '@info.app.name@'
