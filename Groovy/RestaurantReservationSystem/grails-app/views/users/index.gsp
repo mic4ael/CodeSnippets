@@ -5,41 +5,38 @@
     <title>Home</title>
 </head>
 <body>
-    <div class="ui container home">
-        <div class="ui secondary pointing menu">
-            <g:link url="[action: 'index', controller: 'Home']" class="ui item">
-                <g:message code="menu.items.home"/>
-            </g:link>
-            <g:link url="[action: 'index', controller: 'User']" class="ui item active">
-                <g:message code="menu.items.users"/>
-            </g:link>
-            <a class="item"><g:message code="menu.items.reservations"/></a>
-            <div class="right menu">
-                <g:link url="[action: '', controller: 'logout']" class="ui item">
-                    <g:message code="menu.items.logout"/>
-                </g:link>
-            </div>
-        </div>
-        <div class="ui">
-            <table class="ui very padded table">
-                <thead>
-                    <tr>
-                        <th>Adres email</th>
-                        <th>Nazwa użytkownika</th>
-                        <th>Enabled</th>
+    <div id="users-list" class="ui">
+        <table class="ui padded table">
+            <thead>
+                <tr>
+                    <th><g:message code="labels.email"/></th>
+                    <th><g:message code="labels.username"/></th>
+                    <th><g:message code="labels.enabled"/></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <g:each var="user" in="${users}">
+                    <tr data-user-id="${user.id}" data-href="${createLink(controller: 'users', action: 'update')}">
+                        <td>${user.email}</td>
+                        <td>${user.username}</td>
+                        <td>
+                            <g:if test="${user.enabled}">
+                                <div class="ui toggle checkbox">
+                                    <input class="toggle-user-state" type="checkbox" ${user.enabled ? 'checked' : ''}>
+                                    <label></label>
+                                </div>
+                            </g:if>
+                        </td>
+                        <td>
+                            <i class="remove user large link icon remove-user"
+                               data-href="${createLink(mapping: 'userDelete', params: [id: user.id])}"></i>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <g:each var="user" in="${users}">
-                        <tr>
-                            <td>${user.email}</td>
-                            <td>${user.username}</td>
-                            <td>${user.enabled}</td>
-                        </tr>
-                    </g:each>
-                </tbody>
-            </table>
-        </div>
+                </g:each>
+            </tbody>
+        </table>
     </div>
+    <asset:javascript src="users.js"/>
 </body>
 </html>

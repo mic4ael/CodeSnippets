@@ -12,6 +12,8 @@ class UrlMappings {
         "/register" (controller: 'Registration') {
             action = [GET: "index", POST: "create"]
         }
+        "/users" (controller: 'Users', action: 'index')
+        name(userDelete: "/users/$id" (controller: 'Users', action: 'delete', method: DELETE)
         "500" (view: '/error')
         "404" (view: '/notFound')
     }
