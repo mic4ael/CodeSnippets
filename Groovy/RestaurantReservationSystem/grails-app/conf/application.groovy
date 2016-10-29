@@ -6,6 +6,7 @@ grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
 grails.plugin.springsecurity.interceptUrlMap = [
 	[pattern: '/',               access: ['isAuthenticated()']],
+	[pattern: '/home/*',         access: ['isAuthenticated()']],
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/login/*',        access: ['permitAll']],
 	[pattern: '/logout/index',   access: ['isAuthenticated()']],

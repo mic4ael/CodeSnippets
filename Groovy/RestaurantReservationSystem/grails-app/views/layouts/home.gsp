@@ -9,6 +9,13 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="semantic.css"/>
+    <asset:stylesheet src="styles.css"/>
+
+    <asset:javascript src="jquery-2.2.0.min.js"/>
+    <asset:javascript src="semantic.js"/>
+    
     <g:layoutHead/>
 </head>
 <body>
