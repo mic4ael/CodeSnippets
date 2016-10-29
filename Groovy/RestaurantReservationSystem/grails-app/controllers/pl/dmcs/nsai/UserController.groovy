@@ -1,6 +1,10 @@
 package pl.dmcs.nsai
 
-class UserController {
+import pl.dmcs.nsai.User
 
-    def index() { }
+
+class UsersController {
+    def index() {
+        return [users: User.list()]
+    }
 }

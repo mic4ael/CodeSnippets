@@ -7,15 +7,21 @@
 <body>
     <div class="ui container home">
         <div class="ui secondary pointing menu">
-            <a class="item">Home</a>
-            <a class="item">Lista użytkowników</a>
-            <a class="item active">Lista reerwacji</a>
+            <g:link url="[action: 'index', controller: 'Home']" class="ui item active">
+                <g:message code="menu.items.home"/>
+            </g:link>
+            <g:link url="[action: 'index', controller: 'Users']" class="item">
+                <g:message code="menu.items.users"/>
+            </g:link>
+            <a class="item"><g:message code="menu.items.reservations"/></a>
             <div class="right menu">
-                <g:link url="[action: '', controller: 'logout']" class="ui item">Logout</g:link>
+                <g:link url="[action: '', controller: 'logout']" class="ui item">
+                    <g:message code="menu.items.logout"/>
+                </g:link>
             </div>
         </div>
-        <div class="ui segment">
-            <p></p>
+        <div class="ui">
+
         </div>
     </div>
 </body>
