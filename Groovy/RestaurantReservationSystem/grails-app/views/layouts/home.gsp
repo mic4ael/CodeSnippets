@@ -25,10 +25,12 @@
                 <i class="home icon"></i>
                 <g:message code="menu.items.home"/>
             </g:link>
-            <g:link url="[action: 'index', controller: 'Users']" class="ui item ${controllerName == 'users' ? 'active' : ''}">
-                <i class="users icon"></i>
-                <g:message code="menu.items.users"/>
-            </g:link>
+            <sec:ifAllGranted roles="ROLE_ADMIN">
+                <g:link url="[action: 'index', controller: 'Users']" class="ui item ${controllerName == 'users' ? 'active' : ''}">
+                    <i class="users icon"></i>
+                    <g:message code="menu.items.users"/>
+                </g:link>
+            </sec:ifAllGranted>
             <a class="item"><g:message code="menu.items.reservations"/></a>
             <div class="right menu">
                 <g:link url="[action: '', controller: 'logout']" class="ui item">

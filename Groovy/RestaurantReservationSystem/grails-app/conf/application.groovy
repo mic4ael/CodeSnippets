@@ -7,7 +7,7 @@ grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
 grails.plugin.springsecurity.interceptUrlMap = [
 	[pattern: '/',               access: ['isAuthenticated()']],
 	[pattern: '/home/*',         access: ['isAuthenticated()']],
-	[pattern: '/users/**',       access: ['isAuthenticated()']],
+	[pattern: '/users/**',       access: ['ROLE_ADMIN']],
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/login/*',        access: ['permitAll']],
 	[pattern: '/logout/index',   access: ['isAuthenticated()']],
