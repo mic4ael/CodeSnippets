@@ -8,8 +8,16 @@
     <asset:stylesheet src="auth.css"/>
 </head>
 <body>
-    <div class="main ui container">
-        <g:form class="ui form" name="login-form" url="${request.contextPath}/login/authenticate">
+    <div id="login-form" class="main ui container segment">
+        <div class="langs">
+            <a href="/login/auth?lang=pl">
+                <asset:image src="polish.png"/>
+            </a>
+            <a href="/login/auth?lang=en">
+                <asset:image src="english.png"/>
+            </a>
+        </div>
+        <g:form class="ui form" url="${request.contextPath}/login/authenticate">
             <g:if test="${flash.message}">
                 <div class="ui message">
                     <p>${flash.message}</p>

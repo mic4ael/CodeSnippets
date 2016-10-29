@@ -1,4 +1,10 @@
 #login-form {
     width: 500px;
-    margin: 20% auto;
+    margin: 15% auto;
+}
+
+#login-form > .langs {
+    margin: 0 auto;
+    width: 90px;
+    padding: 0 10px;
 }
