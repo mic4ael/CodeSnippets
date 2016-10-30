@@ -31,7 +31,9 @@
                     <g:message code="menu.items.users"/>
                 </g:link>
             </sec:ifAllGranted>
-            <a class="item"><g:message code="menu.items.reservations"/></a>
+            <sec:ifAllGranted roles="ROLE_ADMIN">
+                <a class="item"><g:message code="menu.items.reservations"/></a>
+            </sec:ifAllGranted>
             <div class="right menu">
                 <g:link url="[action: '', controller: 'logout']" class="ui item">
                     <i class="sign out icon"></i>
