@@ -25,6 +25,7 @@ class RegistrationController {
         }
 
         if (!user.hasErrors() && !invalidRecaptcha && user.save()) {
+            UserRole.create(user, Role.findByAuthority('ROLE_USER'))
             recaptchaService.cleanUp(session)
             mailService.sendMail {
                 async(true)
