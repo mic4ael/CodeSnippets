@@ -2,13 +2,15 @@ package pl.dmcs.nsai
 
 import grails.converters.JSON
 
+import pl.dmcs.nsai.Role
 import pl.dmcs.nsai.User
 import pl.dmcs.nsai.UserRole
 
 
 class UsersController {
     def index() {
-        return [users: User.list()]
+        def users = UserRole.findAllByRole(Role.findByAuthority("ROLE_USER"))*.user
+        return [users: users]
     }
 
     def update() {
