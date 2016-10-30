@@ -25,6 +25,11 @@
                 <i class="home icon"></i>
                 <g:message code="menu.items.home"/>
             </g:link>
+            <sec:ifAllGranted roles="ROLE_USER">
+                <g:link url="" class="ui item ${controllerName == 'reservations' ? 'active' : ''}">
+                    <g:message code="menu.items.myReservations"/>
+                </g:link>
+            </sec:ifAllGranted>
             <sec:ifAllGranted roles="ROLE_ADMIN">
                 <g:link url="[action: 'index', controller: 'Users']" class="ui item ${controllerName == 'users' ? 'active' : ''}">
                     <i class="users icon"></i>
