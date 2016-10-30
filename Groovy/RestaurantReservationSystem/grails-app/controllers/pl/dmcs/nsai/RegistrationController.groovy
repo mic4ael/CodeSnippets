@@ -2,15 +2,15 @@ package pl.dmcs.nsai
 
 import com.megatome.grails.RecaptchaService
 import grails.plugins.mail.MailService
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
+import pl.dmcs.nsai.Role
 import pl.dmcs.nsai.User
+import pl.dmcs.nsai.UserRole
+
 
 class RegistrationController {
     MailService mailService
     RecaptchaService recaptchaService
-    Logger log = LoggerFactory.getLogger(RegistrationController.class)
 
     def index() {
         return render(view: 'index')
