@@ -17,20 +17,19 @@
             </thead>
             <tbody>
                 <g:each var="user" in="${users}">
-                    <tr data-user-id="${user.id}" data-href="${createLink(controller: 'users', action: 'update')}">
+                    <tr data-user-id="${user.id}">
                         <td>${user.email}</td>
                         <td>${user.username}</td>
                         <td>
-                            <g:if test="${user.enabled}">
-                                <div class="ui toggle checkbox">
-                                    <input class="toggle-user-state" type="checkbox" ${user.enabled ? 'checked' : ''}>
-                                    <label></label>
-                                </div>
-                            </g:if>
+                            <div class="ui toggle checkbox">
+                                <input class="toggle-user-state" type="checkbox" ${user.enabled ? 'checked' : ''}
+                                       data-href="${createLink(mapping: 'userManagement', params: [id: user.id])}">
+                                <label></label>
+                            </div>
                         </td>
                         <td>
                             <i class="remove user large link icon remove-user"
-                               data-href="${createLink(mapping: 'userDelete', params: [id: user.id])}"></i>
+                               data-href="${createLink(mapping: 'userManagement', params: [id: user.id])}"></i>
                         </td>
                     </tr>
                 </g:each>

@@ -55,4 +55,8 @@ class User implements Serializable {
             password = password
         }
     }
+
+    public toggleState(state) {
+        enabled = state
+    }
 }

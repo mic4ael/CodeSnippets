@@ -13,6 +13,20 @@ class UsersController {
 
     def update() {
         def user = User.get(params.id)
+        def response = [success: true]
+
+        if (!user) {
+            response.success = false
+            return render(response as JSON)
+        }
+
+        def data = request.JSON
+        if (data) {
+            user.toggleState(data.enabled)
+            user.save(flush: true, validate: false)
+        }
+
+        return render(response as JSON)
     }
 
     def delete() {
