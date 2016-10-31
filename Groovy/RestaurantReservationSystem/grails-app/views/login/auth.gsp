@@ -11,10 +11,10 @@
     <div id="login-form" class="main ui container segment">
         <div class="langs">
             <a href="/login/auth?lang=pl">
-                <asset:image src="polish.png"/>
+                <i class="poland flag"></i>
             </a>
             <a href="/login/auth?lang=en">
-                <asset:image src="english.png"/>
+                <i class="united kingdom flag"></i>
             </a>
         </div>
         <g:form class="ui form" url="${request.contextPath}/login/authenticate">

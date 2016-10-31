@@ -10,11 +10,11 @@
 <body>
     <div id="registration-form" class="main ui container segment">
         <div class="langs">
-            <a href="/register?lang=pl">
-                <asset:image src="polish.png"/>
+            <a href="/login/auth?lang=pl">
+                <i class="poland flag"></i>
             </a>
-            <a href="/register?lang=en">
-                <asset:image src="english.png"/>
+            <a href="/login/auth?lang=en">
+                <i class="united kingdom flag"></i>
             </a>
         </div>
         <g:form class="ui form ${hasErrors(bean: user, field: '', 'error')} ${invalidRecaptcha == true ? 'error' : ''}"
