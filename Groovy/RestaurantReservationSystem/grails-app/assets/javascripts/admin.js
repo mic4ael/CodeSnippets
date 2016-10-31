@@ -98,7 +98,7 @@
         });
 
         $.ajax({
-            url: $('#canvas').data('href'),
+            url: URLS.tableManagement(),
             type: 'GET',
             success: function(data) {
                 loadTablesFromJSON(data);
@@ -160,7 +160,7 @@
 
             var $this = $(this);
             $.ajax({
-                url: $this.data('href'),
+                url: URLS.tableManagement(),
                 type: 'POST',
                 data: JSON.stringify(canvas),
                 dataType: 'json',

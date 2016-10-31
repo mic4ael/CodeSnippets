@@ -29,13 +29,12 @@
         <button type="button" class="ui primary button add-table" style="display: none;">
             <i class="add circle icon"></i><g:message code="buttons.addtable"/>
         </button>
-        <button type="button" class="ui primary button save-layout" style="display: none;"
-                data-href="${createLink(mapping: 'tableManagement')}">
+        <button type="button" class="ui primary button save-layout" style="display: none;">
             <i class="save circle icon"></i>Zapisz
         </button>
     </div>
     <div class="ui segment">
-        <canvas id="canvas" data-href="${createLink(mapping: 'tableManagement')}"></canvas>
+        <canvas id="canvas"></canvas>
     </div>
     <div class="ui small modal new-table-modal">
         <div class="header">
@@ -66,6 +65,9 @@
         var URLS = {
             removeTable: function(tableId) {
                 return "${createLink(mapping: 'tableManagement')}" + '/' + tableId;
+            },
+            tableManagement: function() {
+                return "${createLink(mapping: 'tableManagement')}";
             }
         };
     </script>
