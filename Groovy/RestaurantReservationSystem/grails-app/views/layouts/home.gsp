@@ -13,8 +13,9 @@
     <asset:stylesheet src="semantic.css"/>
     <asset:stylesheet src="styles.css"/>
 
-    <asset:javascript src="jquery-2.2.0.min.js"/>
-    <asset:javascript src="semantic.js"/>
+    <asset:javascript src="dependencies/jquery-2.2.0.min.js"/>
+    <asset:javascript src="dependencies/semantic.js"/>
+    <asset:javascript src="dependencies/fabric.min.js"/>
 
     <g:layoutHead/>
 </head>
