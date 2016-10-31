@@ -24,13 +24,13 @@
     </div>
     <div id="management-actions">
         <button type="button" class="ui primary button edit-layout">
-            <i class="edit icon"></i>Edytuj
+            <i class="edit icon"></i><g:message code="buttons.edit"/>
         </button>
         <button type="button" class="ui primary button add-table" style="display: none;">
             <i class="add circle icon"></i><g:message code="buttons.addtable"/>
         </button>
         <button type="button" class="ui primary button save-layout" style="display: none;">
-            <i class="save circle icon"></i>Zapisz
+            <i class="save circle icon"></i><g:message code="buttons.save"/>
         </button>
     </div>
     <div class="ui segment">
@@ -38,26 +38,26 @@
     </div>
     <div class="ui small modal new-table-modal">
         <div class="header">
-            Nowy stolik
+            <g:message code="header.newtable"/>
         </div>
         <div class="content">
             <form class="ui form new-table-form" onsubmit="return false;">
                 <div class="field">
-                    <label>Number of seats</label>
+                    <label><g:message code="labels.numberofseats"/></label>
                     <input type="text" name="numberOfSeats" step="1">
                 </div>
                 <div class="field">
-                    <label>Kształt stolika</label>
+                    <label><g:message code="labels.tableshape"/></label>
                     <select class="ui fluid dropdown" name="tableShape">
-                        <option value="Circle">Circle</option>
-                        <option value="Rect">Rectangular</option>
+                        <option value="Circle"><g:message code="labels.circle"/></option>
+                        <option value="Rect"><g:message code="labels.rect"/></option>
                     </select>
                 </div>
             </form>
         </div>
         <div class="actions">
-            <div class="ui approve button">Create</div>
-            <div class="ui cancel button">Cancel</div>
+            <div class="ui approve button"><g:message code="buttons.create"/></div>
+            <div class="ui cancel button"><g:message code="buttons.cancel"/></div>
         </div>
     </div>
 
