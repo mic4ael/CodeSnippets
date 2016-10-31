@@ -41,4 +41,16 @@ class TablesController {
 
         return render(response as JSON)
     }
+
+    def delete() {
+        def tableId = params.id
+        def table = Table.get(tableId)
+        def response = [success: true]
+
+        if (table) {
+            table.delete()
+        }
+
+        return render(response as JSON)
+    }
 }

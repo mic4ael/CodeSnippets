@@ -33,10 +33,68 @@
             });
         }
 
+        function addRemoveBtn(target) {
+            var x = target.left + target.width - 15,
+                y = target.top,
+                removeBtn = $('<i>', {
+                    'id': 'remove-btn',
+                    'class': 'large remove circle icon',
+                    'css': {
+                        'position': 'absolute',
+                        'top': y,
+                        'left': x,
+                        'z-index': 1000,
+                        'cursor': 'pointer'
+                    },
+                    'on': {
+                        click: function() {
+                            if (canvas.getActiveObject()) {
+                                var activeObject = canvas.getActiveObject();
+                                if (activeObject.tableId) {
+                                    $.ajax({
+                                        url: URLS.removeTable(activeObject.tableId),
+                                        type: 'DELETE',
+                                        success: function(data) {
+                                            if (data.success) {
+                                                canvas.remove(activeObject);
+                                                removeRemoveBtn();
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    canvas.remove(activeObject);
+                                    removeRemoveBtn();
+                                }
+                            }
+                        }
+                    }
+                });
+
+            $('.canvas-container').append(removeBtn);
+        }
+
+        function removeRemoveBtn() {
+            $('#remove-btn').remove();
+        }
+
         var canvas = new fabric.Canvas('canvas', {
             width: 1140,
             height: 580,
             selection: false
+        });
+
+        canvas.on('mouse:down', function(evt) {
+            if (!canvas.getActiveObject()) {
+                removeRemoveBtn();
+            }
+        });
+
+        canvas.on('object:selected', function(evt) {
+            addRemoveBtn(evt.target);
+        });
+
+        canvas.on('object:moving', function(evt) {
+            removeRemoveBtn();
         });
 
         $.ajax({

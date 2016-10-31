@@ -62,6 +62,13 @@
         </div>
     </div>
 
+    <script>
+        var URLS = {
+            removeTable: function(tableId) {
+                return "${createLink(mapping: 'tableManagement')}" + '/' + tableId;
+            }
+        };
+    </script>
     <asset:javascript src="dependencies/fabric.min.js"/>
     <asset:javascript src="admin.js"/>
 </body>
