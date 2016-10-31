@@ -13,6 +13,7 @@ class Role {
     }
 
     static mapping = {
+        table('roles')
         cache(true)
     }
 }
