@@ -15,38 +15,11 @@
 
     <asset:javascript src="dependencies/jquery-2.2.0.min.js"/>
     <asset:javascript src="dependencies/semantic.js"/>
-    <asset:javascript src="dependencies/fabric.min.js"/>
 
     <g:layoutHead/>
 </head>
 <body>
     <div class="ui container home">
-        <div class="ui secondary pointing menu">
-            <g:link url="[action: 'index', controller: 'Home']" class="ui item ${controllerName == 'home' ? 'active' : ''}">
-                <i class="home icon"></i>
-                <g:message code="menu.items.home"/>
-            </g:link>
-            <sec:ifAllGranted roles="ROLE_USER">
-                <g:link url="" class="ui item ${controllerName == 'reservations' ? 'active' : ''}">
-                    <g:message code="menu.items.myReservations"/>
-                </g:link>
-            </sec:ifAllGranted>
-            <sec:ifAllGranted roles="ROLE_ADMIN">
-                <g:link url="[action: 'index', controller: 'Users']" class="ui item ${controllerName == 'users' ? 'active' : ''}">
-                    <i class="users icon"></i>
-                    <g:message code="menu.items.users"/>
-                </g:link>
-            </sec:ifAllGranted>
-            <sec:ifAllGranted roles="ROLE_ADMIN">
-                <a class="item"><g:message code="menu.items.reservations"/></a>
-            </sec:ifAllGranted>
-            <div class="right menu">
-                <g:link url="[action: '', controller: 'logout']" class="ui item">
-                    <i class="sign out icon"></i>
-                    <g:message code="menu.items.logout"/>
-                </g:link>
-            </div>
-        </div>
         <g:layoutBody/>
     </div>
 </body>
