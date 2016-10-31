@@ -16,6 +16,9 @@ class UrlMappings {
         name(userManagement: "/users/$id" (controller: 'Users') {
             action = [DELETE: "delete", PUT: "update"]
         })
+        name(tableManagement: "/tables" (controller: 'Tables') {
+            action = [POST: "create", GET: "getAll"]
+        })
         "500" (view: '/error')
         "404" (view: '/notFound')
     }

@@ -1,6 +1,10 @@
 .container.home {
     margin: 10% auto;
-    width: 50%;
+    width: 70%;
+}
+
+.canvas-container {
+    width: 100% !important;
 }
 
 .ui.checkbox {

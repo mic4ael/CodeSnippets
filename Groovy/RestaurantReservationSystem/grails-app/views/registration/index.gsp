@@ -19,7 +19,7 @@
         </div>
         <g:form class="ui form ${hasErrors(bean: user, field: '', 'error')} ${invalidRecaptcha == true ? 'error' : ''}"
                 url="['controller': 'register', 'action': '']">
-            <div class="field ${hasErrors(bean: user, field: 'username', 'error')}">
+            <div class="field required ${hasErrors(bean: user, field: 'username', 'error')}">
                 <label><g:message code="labels.username"/></label>
                 <g:textField name="username" value="${user != null ? user.username : ''}"/>
             </div>
@@ -33,7 +33,7 @@
                     </g:eachError>
                 </div>
             </g:hasErrors>
-            <div class="field ${hasErrors(bean: user, field: 'email', 'error')}">
+            <div class="field required ${hasErrors(bean: user, field: 'email', 'error')}">
                 <label><g:message code="labels.email"/></label>
                 <g:textField name="email" value="${user != null ? user.email : ''}"/>
             </div>
@@ -47,7 +47,7 @@
                     </g:eachError>
                 </div>
             </g:hasErrors>
-            <div class="field ${hasErrors(bean: user, field: 'password', 'error')}">
+            <div class="field required ${hasErrors(bean: user, field: 'password', 'error')}">
                 <label><g:message code="labels.password"/></label>
                 <g:passwordField name="password"/>
             </div>
@@ -61,12 +61,12 @@
                     </g:eachError>
                 </div>
             </g:hasErrors>
-            <div class="field">
+            <div class="field required">
                 <label><g:message code="labels.passwordConfirm"/></label>
                 <g:passwordField name="passwordConfirm"/>
             </div>
             <recaptcha:ifEnabled>
-                <div class="field">
+                <div class="field required">
                     <recaptcha:recaptcha theme="light"/>
                 </div>
             </recaptcha:ifEnabled>

@@ -1,10 +1,10 @@
 package pl.dmcs.nsai
 
 class Table {
-    Integer numberOfSeats
+    String config
 
     static mapping = {
         table('tables')
-        numberOfSeats(column: 'number_of_seats')
+        config(type: 'text')
     }
 }

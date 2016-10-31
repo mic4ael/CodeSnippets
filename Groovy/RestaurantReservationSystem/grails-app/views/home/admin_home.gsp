@@ -22,14 +22,47 @@
             </g:link>
         </div>
     </div>
+    <div id="management-actions">
+        <button type="button" class="ui primary button edit-layout">
+            <i class="edit icon"></i>Edytuj
+        </button>
+        <button type="button" class="ui primary button add-table" style="display: none;">
+            <i class="add circle icon"></i><g:message code="buttons.addtable"/>
+        </button>
+        <button type="button" class="ui primary button save-layout" style="display: none;"
+                data-href="${createLink(mapping: 'tableManagement')}">
+            <i class="save circle icon"></i>Zapisz
+        </button>
+    </div>
     <div class="ui segment">
-        <canvas id="canvas"></canvas>
-        <div class="row">
-
+        <canvas id="canvas" data-href="${createLink(mapping: 'tableManagement')}"></canvas>
+    </div>
+    <div class="ui small modal new-table-modal">
+        <div class="header">
+            Nowy stolik
+        </div>
+        <div class="content">
+            <form class="ui form new-table-form" onsubmit="return false;">
+                <div class="field">
+                    <label>Number of seats</label>
+                    <input type="text" name="numberOfSeats" step="1">
+                </div>
+                <div class="field">
+                    <label>Kształt stolika</label>
+                    <select class="ui fluid dropdown" name="tableShape">
+                        <option value="Circle">Circle</option>
+                        <option value="Rect">Rectangular</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui approve button">Create</div>
+            <div class="ui cancel button">Cancel</div>
         </div>
     </div>
 
     <asset:javascript src="dependencies/fabric.min.js"/>
-    <asset:javascript src="home.js"/>
+    <asset:javascript src="admin.js"/>
 </body>
 </html>
