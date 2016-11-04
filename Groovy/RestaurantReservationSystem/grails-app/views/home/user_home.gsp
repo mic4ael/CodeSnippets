@@ -24,7 +24,14 @@
         <canvas id="canvas"></canvas>
     </div>
 
+    <script>
+        var URLS = {
+            tableManagement: function() {
+                return "${createLink(mapping: 'tableManagement')}";
+            }
+        };
+    </script>
     <asset:javascript src="dependencies/fabric.min.js"/>
-    <asset:javascript src="home.js"/>
+    <asset:javascript src="user.js"/>
 </body>
 </html>
