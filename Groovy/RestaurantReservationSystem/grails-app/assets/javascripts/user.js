@@ -9,13 +9,10 @@
             };
         })(fabric.Object.prototype.toObject);
 
-        function toggleSelectability(selectable) {
-            if (!selectable) {
-                canvas.deactivateAll();
-            }
-
+        function toggleSelectability() {
+            canvas.deactivateAll();
             canvas.forEachObject(function(o) {
-                o.selectable = selectable;
+                o.selectable = false;
             });
         }
 
@@ -27,7 +24,7 @@
 
             canvas.clear();
             canvas.loadFromJSON(canvasConfig, function() {
-                toggleSelectability(false);
+                toggleSelectability();
                 canvas.renderAll();
             });
         }
@@ -38,8 +35,8 @@
             selection: true
         });
 
-        canvas.on('object:selected', function(evt) {
-
+        canvas.on('mouse:down', function(evt) {
+            console.log(evt.target)
         });
 
         $.ajax({
