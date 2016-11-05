@@ -3,7 +3,7 @@ package pl.dmcs.nsai
 
 class Reservation {
     Date createdAt
-    Datetime reservedAt
+    Date reservedAt
 
     static belongsTo = [createdBy: User, reservedTable: Table]
     static mapping = {

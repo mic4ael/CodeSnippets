@@ -36,7 +36,15 @@
         });
 
         canvas.on('mouse:down', function(evt) {
-            console.log(evt.target)
+            var tableObject = evt.target;
+            $('.reservation-modal').modal({
+                onShow: function() {
+
+                },
+                onApprove: function() {
+
+                }
+            }).modal('show');
         });
 
         $.ajax({

@@ -2,6 +2,11 @@
 <html>
 <head>
     <meta name="layout" content="home"/>
+
+    <asset:javascript src="dependencies/jquery.datetimepicker.full.js"/>
+    <asset:javascript src="dependencies/jquery.validate.js"/>
+
+    <asset:stylesheet src="jquery.datetimepicker.min.css"/>
     <title>Home</title>
 </head>
 <body>
