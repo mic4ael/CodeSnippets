@@ -34,8 +34,8 @@
         }
 
         function addRemoveBtn(target) {
-            var x = target.left + target.width - 15,
-                y = target.top,
+            var x = target.oCoords.tr.x,
+                y = target.oCoords.tr.y,
                 removeBtn = $('<i>', {
                     'id': 'remove-btn',
                     'class': 'large remove circle icon',
@@ -97,6 +97,16 @@
             removeRemoveBtn();
         });
 
+        canvas.on('object:modified', function(evt) {
+            removeRemoveBtn();
+            addRemoveBtn(evt.target);
+        });
+
+        canvas.on('object:scaling', function(evt) {
+            removeRemoveBtn();
+            addRemoveBtn(evt.target);
+        });
+
         $.ajax({
             url: URLS.tableManagement(),
             type: 'GET',
@@ -136,6 +146,7 @@
                         }, {height: 50, width: 100});
                     }
 
+                    $form[0].reset();
                     canvas.add(group);
                     canvas.renderAll();
                 }
@@ -171,6 +182,7 @@
                     $editLayoutBtn.show();
                     loadTablesFromJSON(data);
                     toggleSelectability(false);
+                    removeRemoveBtn();
                 }
             });
         });
