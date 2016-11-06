@@ -4,8 +4,6 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 
 
 class HomeController {
-    def springSecurityService
-
     def index() {
         if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
             return render(view: 'admin_home')
