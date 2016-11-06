@@ -19,6 +19,9 @@ class UrlMappings {
         name(tableManagement: "/tables/$id?" (controller: 'Tables') {
             action = [POST: "create", GET: "getAll", DELETE: "delete"]
         })
+        name(reservationManagement: "/reservations/$id?" (controller: 'Reservations') {
+            action = [POST: "create", GET: "get", DELETE: "delete"]
+        })
         "500" (view: '/error')
         "404" (view: '/notFound')
     }

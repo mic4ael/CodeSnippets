@@ -36,13 +36,34 @@
         });
 
         canvas.on('mouse:down', function(evt) {
-            var tableObject = evt.target;
+            var tableObject = evt.target,
+                $form = $('.reservation-modal .new-reservation-form');
+
+            if (!tableObject || !tableObject.tableId) {
+                return;
+            }
+
             $('.reservation-modal').modal({
                 onShow: function() {
 
                 },
                 onApprove: function() {
+                    var reservationData = {};
 
+                    $.each($form.serializeArray(), function() {
+                        reservationData[this.name] = this.value;
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: URLS.reservationManagement(),
+                        data: JSON.stringify({tableId: tableObject.tableId, reservation: reservationData}),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(data) {
+                            $form[0].reset();
+                        }
+                    });
                 }
             }).modal('show');
         });

@@ -14,7 +14,9 @@
             <i class="users icon"></i>
             <g:message code="menu.items.users"/>
         </g:link>
-        <a class="item"><g:message code="menu.items.reservations"/></a>
+        <g:link url="[controller: 'Reservations']" class="ui item ${controllerName == 'reservations' ? 'active' : ''}">
+            <g:message code="menu.items.reservations"/>
+        </g:link>
         <div class="right menu">
             <g:link url="[action: '', controller: 'logout']" class="ui item">
                 <i class="sign out icon"></i>

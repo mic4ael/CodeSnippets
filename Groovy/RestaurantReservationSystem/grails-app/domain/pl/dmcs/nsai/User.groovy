@@ -1,5 +1,7 @@
 package pl.dmcs.nsai
 
+import pl.dmcs.nsai.Reservation
+
 import groovy.transform.ToString
 import groovy.transform.EqualsAndHashCode
 
@@ -12,6 +14,8 @@ class User implements Serializable {
         table('users')
         password(column: 'password')
     }
+
+    static hasMany = [reservations: Reservation]
 
     static transients = ['passwordConfirm', 'springSecurityService']
     static constraints = {
