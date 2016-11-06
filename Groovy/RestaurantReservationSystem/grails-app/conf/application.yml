@@ -20,6 +20,7 @@ environments:
             dbCreate: create-drop
             url: jdbc:postgresql://127.0.0.1:5432/reservations
             username: postgres
+            # logSql: true
         recaptcha:
             enabled: true
             publicKey: "6Lci-wkUAAAAALDdzvYcLDiiZIAmPiqCnLDLINUy"
@@ -107,7 +108,9 @@ grails:
               - application/json
               - text/json
             multipartForm: multipart/form-data
-            pdf: application/pdf
+            pdf:
+              - application/pdf
+              - application/x-pdf
             rss: application/rss+xml
             text: text/plain
             hal:

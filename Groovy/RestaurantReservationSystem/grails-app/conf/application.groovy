@@ -5,23 +5,25 @@ grails.plugin.springsecurity.authority.className = 'pl.dmcs.nsai.Role'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
 grails.plugin.springsecurity.interceptUrlMap = [
-	[pattern: '/',               access: ['isAuthenticated()']],
-	[pattern: '/home/*',         access: ['isAuthenticated()']],
-	[pattern: '/users/**',       access: ['ROLE_ADMIN']],
-	[pattern: '/tables',         access: ['isAuthenticated()'], httpMethod: 'GET'],
-	[pattern: '/tables/**',      access: ['ROLE_ADMIN']],
-	[pattern: '/error',          access: ['permitAll']],
-	[pattern: '/login/*',        access: ['permitAll']],
-	[pattern: '/logout/index',   access: ['isAuthenticated()']],
-	[pattern: '/index',          access: ['permitAll']],
-	[pattern: '/index.gsp',      access: ['permitAll']],
-	[pattern: '/register',       access: ['permitAll']],
-	[pattern: '/shutdown',       access: ['permitAll']],
-	[pattern: '/assets/**',      access: ['permitAll']],
-	[pattern: '/**/js/**',       access: ['permitAll']],
-	[pattern: '/**/css/**',      access: ['permitAll']],
-	[pattern: '/**/images/**',   access: ['permitAll']],
-	[pattern: '/**/favicon.ico', access: ['permitAll']]
+	[pattern: '/',                access: ['isAuthenticated()']],
+	[pattern: '/home/*',          access: ['isAuthenticated()']],
+	[pattern: '/users/**',        access: ['ROLE_ADMIN']],
+	[pattern: '/tables',          access: ['isAuthenticated()'], httpMethod: 'GET'],
+	[pattern: '/tables/**',       access: ['ROLE_ADMIN']],
+	[pattern: '/reservations',    access: ['isAuthenticated()']],
+	[pattern: '/reservations/**', access: ['isAuthenticated()']],
+	[pattern: '/error',           access: ['permitAll']],
+	[pattern: '/login/*',         access: ['permitAll']],
+	[pattern: '/logout/index',    access: ['isAuthenticated()']],
+	[pattern: '/index',           access: ['permitAll']],
+	[pattern: '/index.gsp',       access: ['permitAll']],
+	[pattern: '/register',        access: ['permitAll']],
+	[pattern: '/shutdown',        access: ['permitAll']],
+	[pattern: '/assets/**',       access: ['permitAll']],
+	[pattern: '/**/js/**',        access: ['permitAll']],
+	[pattern: '/**/css/**',       access: ['permitAll']],
+	[pattern: '/**/images/**',    access: ['permitAll']],
+	[pattern: '/**/favicon.ico',  access: ['permitAll']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
@@ -32,3 +34,6 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**/favicon.ico', filters: 'none'],
 	[pattern: '/**',             filters: 'JOINED_FILTERS']
 ]
+
+grails.plugin.wkhtmltopdf.binary = "/usr/local/bin/wkhtmltopdf"
+grails.plugin.wkhtmltox.binary = "/usr/local/bin/wkhtmltopdf"
