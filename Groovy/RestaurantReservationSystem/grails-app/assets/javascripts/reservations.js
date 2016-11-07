@@ -11,6 +11,10 @@
                     if (data.success) {
                         $this.closest('tr').remove();
                     }
+
+                    if (data.message) {
+                        $.notify(data.message, data.success ? 'success' : 'error');
+                    }
                 }
             })
         })

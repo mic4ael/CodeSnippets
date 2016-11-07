@@ -48,22 +48,33 @@
 
                 },
                 onApprove: function() {
-                    var reservationData = {};
+                    var reservationData = {},
+                        closeModal = false;
 
                     $.each($form.serializeArray(), function() {
                         reservationData[this.name] = this.value;
                     });
 
                     $.ajax({
+                        async: false,
                         type: 'POST',
                         url: URLS.reservationManagement(),
                         data: JSON.stringify({tableId: tableObject.tableId, reservation: reservationData}),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function(data) {
-                            $form[0].reset();
+                            if (data.success) {
+                                $form[0].reset();
+                                closeModal = true;
+                            }
+
+                            if (data.message) {
+                                $.notify(data.message, data.success ? 'success' : 'error');
+                            }
                         }
                     });
+
+                    return closeModal;
                 }
             }).modal('show');
         });

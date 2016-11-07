@@ -9,7 +9,9 @@
                 contentType: 'application/json',
                 type: 'PUT',
                 success: function(data) {
-                    console.log(data)
+                    if (data.message) {
+                        $.notify(data.message, data.success ? 'success' : 'error');
+                    }
                 }
             });
         });
@@ -24,6 +26,10 @@
                 success: function(data) {
                     if (data.success) {
                         $this.closest('tr').remove();
+                    }
+
+                    if (data.message) {
+                        $.notify(data.message, data.success ? 'success' : 'error');
                     }
                 }
             });

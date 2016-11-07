@@ -18,6 +18,7 @@ class TablesController {
             tableConfig.tableId = it.id
             response << tableConfig
         }
+
         return render(response as JSON)
     }
 
@@ -45,10 +46,14 @@ class TablesController {
     def delete() {
         def tableId = params.id
         def table = Table.get(tableId)
-        def response = [success: true]
+        def response = [success: false]
 
         if (table) {
             table.delete()
+            response.success = true
+            response.message = 'Table has been removed'
+        } else {
+            response.message = 'Table with id ${tableId} does not exist'
         }
 
         return render(response as JSON)

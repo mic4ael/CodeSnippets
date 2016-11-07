@@ -59,6 +59,10 @@
                                                 canvas.remove(activeObject);
                                                 removeRemoveBtn();
                                             }
+
+                                            if (data.message) {
+                                                $.notify(data.message, data.success ? 'success' : 'error');
+                                            }
                                         }
                                     });
                                 } else {
@@ -183,6 +187,8 @@
                     loadTablesFromJSON(data);
                     toggleSelectability(false);
                     removeRemoveBtn();
+
+                    $.notify('The layout has been saved', 'success');
                 }
             });
         });

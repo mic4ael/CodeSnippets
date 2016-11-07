@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory
 
 class ReservationsController {
     Logger logger = LoggerFactory.getLogger(ReservationsController.class)
+
     def springSecurityService
     def wkhtmltoxService
     def mailService
@@ -29,21 +30,31 @@ class ReservationsController {
     def create() {
         def data = request.JSON
         def table = Table.get(data.tableId)
+        def response = [success: false]
 
         if (!table) {
-            return render([success: false])
+            response.message = "There is no table with id: ${data.tableId}"
         } else {
             def reservationData = data.reservation
-            def reservation = new Reservation(firstName: reservationData['first-name'], lastName: reservationData['last-name'],
-                                              phoneNumber: reservationData['phone-number'], createdAt: new Date(),
-                                              reservedAt: Date.parse('dd.MM.yyyy HH:mm', reservationData['reservation-dt']))
+            def reservationDt = Date.parse('dd.MM.yyyy HH:mm', reservationData['reservation-dt'])
+            def existingReservation = Reservation.findByReservedAt(reservationDt)
 
-            springSecurityService.currentUser.addToReservations(reservation).save(validate: false)
-            table.addToReservations(reservation).save(validate: false, flush: true)
-            sendConfirmationPDF(reservation)
+            if (existingReservation) {
+                response.message = "There is already another reservation at ${reservationDt}"
+            } else {
+                def reservation = new Reservation(firstName: reservationData['first-name'], lastName: reservationData['last-name'],
+                                                  phoneNumber: reservationData['phone-number'], createdAt: new Date(),
+                                                  reservedAt: reservationDt)
+
+                springSecurityService.currentUser.addToReservations(reservation).save(validate: false)
+                table.addToReservations(reservation).save(validate: false, flush: true)
+                sendConfirmationPDF(reservation)
+                response.success = true
+                response.message = "You have successfully booked the table"
+            }
         }
 
-        return render([success: true] as JSON)
+        return render(response as JSON)
     }
 
     def sendConfirmationPDF(reservation) {
@@ -62,10 +73,16 @@ class ReservationsController {
 
     def delete() {
         def reservation = Reservation.get(params.id)
+        def response = [success: false]
+
         if (reservation) {
             reservation.delete()
+            response.success = true
+            response.message = "You have successfully cancelled the reservation"
+        } else {
+            response.message = "There is no reservation with id ${params.id}"
         }
 
-        return render([success: true] as JSON)
+        return render(response as JSON)
     }
 }

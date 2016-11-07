@@ -15,6 +15,7 @@
 
     <asset:javascript src="dependencies/jquery-2.2.0.min.js"/>
     <asset:javascript src="dependencies/semantic.js"/>
+    <asset:javascript src="dependencies/notify.js"/>
 
     <g:layoutHead/>
 </head>

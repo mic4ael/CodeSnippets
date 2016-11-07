@@ -15,10 +15,10 @@ class UsersController {
 
     def update() {
         def user = User.get(params.id)
-        def response = [success: true]
+        def response = [success: false]
 
         if (!user) {
-            response.success = false
+            response.message = 'User with id ${params.id} does not exist'
             return render(response as JSON)
         }
 
@@ -26,6 +26,8 @@ class UsersController {
         if (data) {
             user.toggleState(data.enabled)
             user.save(flush: true, validate: false)
+            response.success = true
+            response.message = 'User has been updated'
         }
 
         return render(response as JSON)
@@ -33,13 +35,15 @@ class UsersController {
 
     def delete() {
         def user = User.get(params.id)
-        def response = [success: true]
+        def response = [success: false]
 
         if (!user) {
-            response.success = false
+            response.message = 'User with id ${params.id} does not exist'
         } else {
             UserRole.removeAll(user)
             user.delete()
+            response.success = true
+            response.message = 'User has been removed'
         }
 
         return render(response as JSON)
