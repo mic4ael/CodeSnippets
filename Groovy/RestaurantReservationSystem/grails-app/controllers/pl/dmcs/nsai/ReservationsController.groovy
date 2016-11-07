@@ -33,14 +33,14 @@ class ReservationsController {
         def response = [success: false]
 
         if (!table) {
-            response.message = "There is no table with id: ${data.tableId}"
+            response.message = g.message(code: 'messages.noTable', args: [data.tableId])
         } else {
             def reservationData = data.reservation
             def reservationDt = Date.parse('dd.MM.yyyy HH:mm', reservationData['reservation-dt'])
             def existingReservation = Reservation.findByReservedAt(reservationDt)
 
             if (existingReservation) {
-                response.message = "There is already another reservation at ${reservationDt}"
+                response.message = g.message(code: 'messages.existingReservation', args: [reservationDt])
             } else {
                 def reservation = new Reservation(firstName: reservationData['first-name'], lastName: reservationData['last-name'],
                                                   phoneNumber: reservationData['phone-number'], createdAt: new Date(),
@@ -50,7 +50,7 @@ class ReservationsController {
                 table.addToReservations(reservation).save(validate: false, flush: true)
                 sendConfirmationPDF(reservation)
                 response.success = true
-                response.message = "You have successfully booked the table"
+                response.message = g.message(code: 'messages.successfullReservation')
             }
         }
 
@@ -78,9 +78,9 @@ class ReservationsController {
         if (reservation) {
             reservation.delete()
             response.success = true
-            response.message = "You have successfully cancelled the reservation"
+            response.message = g.message(code: 'messages.reservationCancelled')
         } else {
-            response.message = "There is no reservation with id ${params.id}"
+            response.message = g.message(code: 'message.noReservation', args: [params.id])
         }
 
         return render(response as JSON)
