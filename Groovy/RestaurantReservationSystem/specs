@@ -1,0 +1,9 @@
+2. Tematyka: restauracja - rezerwacja stolików
+3. Logowanie/security - plugin springsecurity
+4. Potwierdzenie rezerwacji na maila
+5. Captcha przy rejestracji
+6. Role: admin i user - różny zakres widoków (admin zarzadza uzytkownikami i rezerwacjami, user: zarzadza tylko rezerwacjami)
+7. internacjonalizacja
+8. Rest API
+9. Widoki wystarczajaco przyjemne dla oka - mapa stolików 3x3
+10. Do rezerwacji wystawianie rachunku w formie PDF
