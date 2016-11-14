@@ -1,5 +1,3 @@
-import random
-
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -51,8 +49,13 @@ def display():
 
     glPushMatrix()
     glRotate(360 - rotation, 0.0, 0.0, 1.0)
-    glTranslatef(translation, translation, 0.0)
+    glTranslatef(0.5 * translation, 4 * translation, 0.0)
     draw_triangle([0.0, 0.2, 0.0], [0.1, 0.1, 0.0], [0.0, 0.1, 0.0], [0.4, 0.5, 0.6])
+    glPopMatrix()
+
+    glPushMatrix()
+    glRotate(360 - rotation, 0.0, 0.0, 1.0)
+    glTranslatef(4 * translation, 0.5 * translation, 0.0)
     draw_triangle([0.1, 0.0, 0.0], [0.1, 0.1, 0.0], [0.2, 0.0, 0.0], [0.9, 0.8, 0.7])
     glPopMatrix()
 
@@ -92,8 +95,13 @@ def display():
 
     glPushMatrix()
     glRotate(360 - rotation, 0.0, 0.0, 1.0)
-    glTranslatef(-translation, translation, 0.0)
+    glTranslatef(-0.5 * translation, 4 * translation, 0.0)
     draw_triangle([0.0, 0.2, 0.0], [-0.1, 0.1, 0.0], [0.0, 0.1, 0.0], [0.9, 0.3, 0.2])
+    glPopMatrix()
+
+    glPushMatrix()
+    glRotate(360 - rotation, 0.0, 0.0, 1.0)
+    glTranslatef(-4 * translation, 0.5 * translation, 0.0)
     draw_triangle([-0.1, 0.0, 0.0], [-0.1, 0.1, 0.0], [-0.2, 0.0, 0.0], [0.9, 0.2, 0.3])
     glPopMatrix()
 
@@ -133,8 +141,13 @@ def display():
 
     glPushMatrix()
     glRotate(360 - rotation, 0.0, 0.0, 1.0)
-    glTranslatef(translation, -translation, 0.0)
+    glTranslatef(0.5 * translation, -4 * translation, 0.0)
     draw_triangle([0.0, -0.2, 0.0], [0.1, -0.1, 0.0], [0.0, -0.1, 0.0], [0.21, 0.12, 0.7])
+    glPopMatrix()
+
+    glPushMatrix()
+    glRotate(360 - rotation, 0.0, 0.0, 1.0)
+    glTranslatef(4 * translation, -0.5 * translation, 0.0)
     draw_triangle([0.1, 0.0, 0.0], [0.1, -0.1, 0.0], [0.2, 0.0, 0.0], [0.41, 0.43, 0.7])
     glPopMatrix()
 
@@ -174,8 +187,13 @@ def display():
 
     glPushMatrix()
     glRotate(360 - rotation, 0.0, 0.0, 1.0)
-    glTranslatef(-translation, -translation, 0.0)
+    glTranslatef(-0.5 * translation, -4 * translation, 0.0)
     draw_triangle([0.0, -0.2, 0.0], [-0.1, -0.1, 0.0], [0.0, -0.1, 0.0], [0.0, 0.5, 0.5])
+    glPopMatrix()
+
+    glPushMatrix()
+    glRotate(360 - rotation, 0.0, 0.0, 1.0)
+    glTranslatef(-4 * translation, -0.5 * translation, 0.0)
     draw_triangle([-0.1, 0.0, 0.0], [-0.1, -0.1, 0.0], [-0.2, 0.0, 0.0], [0.9, 0.9, 0.5])
     glPopMatrix()
 
