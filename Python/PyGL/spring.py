@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 # 1. Pamiętaj o możliwości zmiany perspektywy
 #     przy użyciu strzałek
 # 2. Nałożenie tekstur
