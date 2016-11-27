@@ -23,7 +23,9 @@ static float yCameraAngle = 0.0;
 static float xCameraAngle = 0.0;
 static int th = 0;
 static int ph = 0;
-static int spiralSqueeze = 0;
+static float spiralSqueeze = 1.0;
+static float spiralSqueezeCoeff = 1;
+static float moveZ = 0.0;
 static GLUquadric *quadric;
 
 void vertex(double th2, double ph2)
@@ -57,12 +59,12 @@ void init(void)
 	glClearColor(0.0, 0.0, 0.0, 0.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0, 5.0, 5.0, 0, 0, 0, 0, -COS(ph), 0);
+    gluLookAt(0.0, -1.0, -1.0, 0.0, 5.0, 5.0, 0.0, 1.0, 0.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
     glViewport(0, 0, width, height);
     // gluPerspective(45.0, 1.33, 0.000000001, 10);
-	glOrtho(-8, 8, -8, 8, -8.0, 8.0);
+	glOrtho(-15, 15, -15, 15, -15.0, 15.0);
 }
 
 void display(void)
@@ -80,6 +82,14 @@ void display(void)
     glPopMatrix();
     glFlush();
 	glutSwapBuffers();
+
+    if (spiralSqueeze <= 1.0) {
+        spiralSqueezeCoeff = 1;
+    } else if (spiralSqueeze >= 1.7) {
+        spiralSqueezeCoeff = -1;
+    }
+
+    spiralSqueeze += spiralSqueezeCoeff * 0.05;
 }
 
 void processKeys(int key, int xx, int yy)
@@ -110,7 +120,7 @@ void drawBall()
     int th2, ph2;
 
     glPushMatrix();
-    glTranslatef(0.0, 0.0, -1.3);
+    glTranslatef(0.0, 0.0, 1.4 - moveZ);
     for (ph2 = -90; ph2 < 90; ph2 += DEF_D) {
         glBegin(GL_QUAD_STRIP);
         for (th2 = 0; th2 <= 360; th2 += 2 * DEF_D) {
@@ -127,13 +137,15 @@ void drawBall()
 void drawSpring()
 {
     double angle;
-    double x, y, z = 0.0;
+    double x, y, z = 0.0, newZ;
 
     glPushMatrix();
     for (angle = 0.0; angle <= 360; angle += 0.1) {
         x = COS(6 * angle);
         y = SIN(6 * angle);
-        z += 0.001;
+        newZ = spiralSqueeze * 0.001;
+        z += newZ;
+        moveZ = newZ - z;
 
         glPushMatrix();
         glTranslatef(x, y, z);
@@ -161,10 +173,10 @@ void drawSurface()
     for (i = 0; i < 10000; ++i) {
         glBegin(GL_POLYGON);
         glColor3f(0.3, 0.2, 0.9);
-        glVertex3d(-1.0, -1.0, 4.0 + i * 0.0001);
-        glVertex3d(1.0, -1.0, 4.0 + i * 0.0001);
-        glVertex3d(1.0, 1.0, 4.0 + i * 0.0001);
-        glVertex3d(-1.0, 1.0, 4.0 + i * 0.0001);
+        glVertex3d(-1.0, -1.0, -1.5 + i * 0.0001);
+        glVertex3d(1.0, -1.0, -1.5 + i * 0.0001);
+        glVertex3d(1.0, 1.0, -1.5 + i * 0.0001);
+        glVertex3d(-1.0, 1.0, -1.5 + i * 0.0001);
         glEnd();
     }
     glPopMatrix();
@@ -174,8 +186,8 @@ void drawBaseCylinder()
 {
     glPushMatrix();
     glColor3f(0.2, 0.5, 1.0);
-    glTranslatef(0.0, 0.0, 3.6);
-    gluCylinder(quadric, 0.1, 0.1, 0.4, 50, 50);
+    glTranslatef(0.0, 0.0, -0.5);
+    gluCylinder(quadric, 0.1, 0.1, 0.5, 50, 50);
     glPopMatrix();
 }
 
@@ -193,7 +205,7 @@ void drawSphereCylinder(void)
 
     glPushMatrix();
     glColor3f(0.2, 0.5, 1.0);
-    glTranslatef(0.0, 0.0, -0.4);
+    glTranslatef(0.0, 0.0, -moveZ);
     gluCylinder(quadric, 0.1, 0.1, 0.4, 50, 50);
     glPopMatrix();
 }
