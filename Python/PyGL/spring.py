@@ -20,6 +20,8 @@ spiral_squeeze_coeff = 1
 x_camera_angle, y_camera_angle = 0.0, 0.0
 th, ph = 0, 0
 z_move = 0.0
+x, z, lx, lz = 0.0, 5.0, 0.0, -1.0
+camera_angle = 0.0
 
 brick_im = Image.open('brick_texture.jpg').convert('RGBA')
 brick_ix, brick_iy, brick_image = brick_im.size[0], brick_im.size[1], brick_im.tobytes()
@@ -37,19 +39,18 @@ spring_quadric = gluNewQuadric()
 def init():
     glEnable(GL_DEPTH_TEST)
     glClearColor(0.0, 0.0, 0.0, 0.0)
-    glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity()
-    gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     glViewport(0, 0, width, height)
-    glOrtho(-8.0, 8.0, -8.0, 8.0, -8.0, 8.0)
+    glOrtho(-15.0, 15.0, -15.0, 15.0, -15.0, 15.0)
 
 
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
+
+    gluLookAt(x, 1.0, z, x + lx, 10.0, z + lz, 0.0, 1.0, 0.0)
 
     glPushMatrix()
     glRotatef(ph, 1.0, 0.0, 0.0)
@@ -74,20 +75,23 @@ def display():
     spiral_squeeze += spiral_squeeze_coeff * 0.05
 
 
-def process_keys(key, x, y):
-    global th, ph
+def process_keys(key, xx, yy):
+    global camera_angle, lx, lz, x, z
 
     if key == GLUT_KEY_LEFT:
-        th -= 5
+        camera_angle -= 2.0
+        lx = math.sin(math.radians(camera_angle))
+        lz = -math.cos(math.radians(camera_angle))
     elif key == GLUT_KEY_RIGHT:
-        th += 5
+        camera_angle += 2.0
+        lx = math.sin(math.radians(camera_angle))
+        lz = -math.cos(math.radians(camera_angle))
     elif key == GLUT_KEY_UP:
-        ph += 5
+        x += lx * 2.0
+        z += lz * 2.0
     elif key == GLUT_KEY_DOWN:
-        ph -= 5
-
-    th %= 360
-    ph %= 360
+        x -= lx * 2.0
+        z -= lz * 2.0
 
     glutPostRedisplay()
 
