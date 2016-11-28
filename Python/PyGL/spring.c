@@ -4,6 +4,10 @@
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+
+#include "stb_image.h"
+
 #define COS(x) cos(M_PI / 180 * (x))
 #define SIN(x) sin(M_PI / 180 * (x))
 #define DEF_D 5
@@ -19,8 +23,6 @@ void drawSphereCylinder(void);
 
 static int width = 860;
 static int height = 640;
-static float yCameraAngle = 0.0;
-static float xCameraAngle = 0.0;
 static int th = 0;
 static int ph = 0;
 static float spiralSqueeze = 1.0;
@@ -64,7 +66,7 @@ void init(void)
 	glLoadIdentity();
     glViewport(0, 0, width, height);
     // gluPerspective(45.0, 1.33, 0.000000001, 10);
-	glOrtho(-15, 15, -15, 15, -15.0, 15.0);
+	glOrtho(-10, 10, -10, 10, -10.0, 10.0);
 }
 
 void display(void)
