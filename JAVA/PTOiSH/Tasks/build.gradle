@@ -5,3 +5,9 @@ sourceCompatibility = 1.8
 repositories() {
     jcenter()
 }
+
+
+task exercise4a(type: JavaExec) {
+    main = 'pl.dmcs.ptoish.exercise4.Exercise4a'
+    classpath = sourceSets.main.runtimeClasspath
+}

@@ -1,16 +1,14 @@
 package pl.dmcs.ptoish.exercise4;
 
-import pl.dmcs.ptoish.exercise4.Testable;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 
 public class TestableInvocationHandler implements InvocationHandler {
-    private Testable testableObject;
+    private Object testableObject;
 
-    public TestableInvocationHandler(Testable testableObject) {
+    public TestableInvocationHandler(Object testableObject) {
         this.testableObject = testableObject;
     }
 
