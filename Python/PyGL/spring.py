@@ -17,12 +17,13 @@ from PIL import Image
 width, height = 860, 640
 spiral_squeeze = 1.0
 spiral_squeeze_coeff = 1
-x_camera_angle, y_camera_angle = 0.0, 0.0
 th, ph = 0, 0
 z_move = 0.0
-x, z, lx, lz = 0.0, 5.0, 0.0, -1.0
+x, z, lx, lz = 0.0, 0.0, 0.0, 1.0
 camera_angle = 0.0
+zoom_in = 1.0
 
+textures = None
 brick_im = Image.open('brick_texture.jpg').convert('RGBA')
 brick_ix, brick_iy, brick_image = brick_im.size[0], brick_im.size[1], brick_im.tobytes()
 
@@ -37,12 +38,15 @@ spring_quadric = gluNewQuadric()
 
 
 def init():
+    global textures
+
     glEnable(GL_DEPTH_TEST)
     glClearColor(0.0, 0.0, 0.0, 0.0)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     glViewport(0, 0, width, height)
     glOrtho(-15.0, 15.0, -15.0, 15.0, -15.0, 15.0)
+    textures = glGenTextures(3)
 
 
 def display():
@@ -50,9 +54,10 @@ def display():
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
-    gluLookAt(x, 1.0, z, x + lx, 10.0, z + lz, 0.0, 1.0, 0.0)
+    gluLookAt(x + lx, 1.0, z + lz, x, 5.0, z, 0.0, -1.0, 0.0)
 
     glPushMatrix()
+    glScalef(zoom_in, zoom_in, zoom_in)
     glRotatef(ph, 1.0, 0.0, 0.0)
     glRotatef(th, 0.0, 0.0, 1.0)
     glTranslatef(0.0, 0.0, -4.0)
@@ -76,23 +81,37 @@ def display():
 
 
 def process_keys(key, xx, yy):
-    global camera_angle, lx, lz, x, z
+    global camera_angle, lx, lz, x, z, th, ph, zoom_in, y
 
     if key == GLUT_KEY_LEFT:
         camera_angle -= 2.0
         lx = math.sin(math.radians(camera_angle))
-        lz = -math.cos(math.radians(camera_angle))
+        lz = math.cos(math.radians(camera_angle))
     elif key == GLUT_KEY_RIGHT:
         camera_angle += 2.0
         lx = math.sin(math.radians(camera_angle))
-        lz = -math.cos(math.radians(camera_angle))
+        lz = math.cos(math.radians(camera_angle))
     elif key == GLUT_KEY_UP:
         x += lx * 2.0
         z += lz * 2.0
     elif key == GLUT_KEY_DOWN:
         x -= lx * 2.0
         z -= lz * 2.0
+    elif key == 'w':
+        ph += 5
+    elif key == 's':
+        ph -= 5
+    elif key == 'a':
+        th -= 5
+    elif key == 'd':
+        th += 5
+    elif key == 'i':
+        zoom_in += 1.0
+    elif key == 'o':
+        zoom_in -= 1.0
 
+    th %= 360
+    ph %= 360
     glutPostRedisplay()
 
 
@@ -104,7 +123,7 @@ def draw_base_cylinder():
 
 
 def draw_surface():
-    brick_texture_id = glGenTextures(1)
+    brick_texture_id = textures[0]
     glBindTexture(GL_TEXTURE_2D, brick_texture_id)
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, brick_ix, brick_iy, 0, GL_RGBA,
@@ -184,7 +203,7 @@ def draw_spring():
 
     angle = 0.0
     x, y, z, new_z = 0.0, 0.0, 0.0, 0.0
-    metal_texture_id = glGenTextures(1)
+    metal_texture_id = textures[1]
 
     glBindTexture(GL_TEXTURE_2D, metal_texture_id)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, metal_ix, metal_iy, 0, GL_RGBA,
@@ -243,7 +262,7 @@ def draw_ball_cylinder():
 
 
 def draw_ball():
-    water_texture_id = glGenTextures(1)
+    water_texture_id = textures[2]
     glBindTexture(GL_TEXTURE_2D, water_texture_id)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, water_ix, water_iy, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, water_image)
