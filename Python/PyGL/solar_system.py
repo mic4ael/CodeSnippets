@@ -1,4 +1,5 @@
 import math
+import sys
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -6,6 +7,7 @@ from OpenGL.GLUT import *
 from PIL import Image
 
 
+window = None
 width, height = 1280, 960
 x, z, lx, lz = 0.0, 0.0, 0.0, 1.0
 camera_angle = 0.0
@@ -52,6 +54,7 @@ pluto_im = Image.open('pluto_texture.jpg').convert('RGBA')
 pluto_ix, pluto_iy, pluto_image = pluto_im.size[0], pluto_im.size[1], pluto_im.tobytes()
 pluto_quadric = gluNewQuadric()
 
+planet_size_coefficient = 10.0
 earth_size = 0.0006
 earth_distance_from_sun = 0.150
 earth_orbital_speed = 0.01
@@ -67,6 +70,28 @@ def init():
     glLoadIdentity()
     gluPerspective(30.0, 1.33, 0.00001, 100.0)
     textures = glGenTextures(11)
+    create_menu()
+
+
+def create_menu():
+    glutCreateMenu(handle_menu_selection)
+    glutAddMenuEntry("Increase planets' size", 1)
+    glutAddMenuEntry("Speed up planets", 2)
+    glutAddMenuEntry("Quit", 0)
+    glutAttachMenu(GLUT_RIGHT_BUTTON)
+
+
+def handle_menu_selection(selected):
+    global planet_size_coefficient, earth_orbital_speed
+
+    if selected == 0:
+        glutDestroyWindow(window)
+        sys.exit(0)
+    elif selected == 1:
+        planet_size_coefficient += 5.0
+    elif selected == 2:
+        earth_orbital_speed += 2.0
+    return 0
 
 
 def display():
@@ -156,7 +181,7 @@ def draw_mercury():
     glRotatef(mercury_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(0.387 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(mercury_rotation, 0.0, 0.0, 1.0)
-    gluSphere(mercury_quadric, earth_size * 3.8, 50, 50)
+    gluSphere(mercury_quadric, planet_size_coefficient * earth_size * 0.38, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(0.387 * earth_distance_from_sun)
@@ -186,7 +211,7 @@ def draw_venus():
     glRotatef(venus_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(0.723 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(venus_rotation, 0.0, 0.0, 1.0)
-    gluSphere(venus_quadric, earth_size * 9.5, 50, 50)
+    gluSphere(venus_quadric, planet_size_coefficient * earth_size * 0.95, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(0.723 * earth_distance_from_sun)
@@ -216,7 +241,7 @@ def draw_earth():
     glRotatef(earth_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(earth_distance_from_sun, 0.0, 0.0)
     glRotatef(earth_rotation, 0.0, 0.0, 1.0)
-    gluSphere(earth_quadric, 10 * earth_size, 50, 50)
+    gluSphere(earth_quadric, planet_size_coefficient * earth_size, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(earth_distance_from_sun)
@@ -246,7 +271,7 @@ def draw_mars():
     glRotatef(mars_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(1.52 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(mars_rotation, 0.0, 0.0, 1.0)
-    gluSphere(mars_quadric, earth_size * 5.2, 50, 50)
+    gluSphere(mars_quadric, planet_size_coefficient * earth_size * 0.52, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(1.52 * earth_distance_from_sun)
@@ -276,7 +301,7 @@ def draw_jupiter():
     glRotatef(jupiter_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(5.20 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(jupiter_rotation, 0.0, 0.0, 1.0)
-    gluSphere(jupiter_quadric, earth_size * 100.20, 50, 50)
+    gluSphere(jupiter_quadric, planet_size_coefficient * earth_size * 10.20, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(5.2 * earth_distance_from_sun)
@@ -306,7 +331,7 @@ def draw_saturn():
     glRotatef(saturn_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(9.58 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(saturn_rotation, 0.0, 0.0, 1.0)
-    gluSphere(saturn_quadric, earth_size * 90.40, 50, 50)
+    gluSphere(saturn_quadric, planet_size_coefficient * earth_size * 9.40, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(9.58 * earth_distance_from_sun)
@@ -337,7 +362,7 @@ def draw_uranus():
     glRotatef(uranus_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(19.2 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(uranus_rotation, 0.0, 0.0, 1.0)
-    gluSphere(uranus_quadric, earth_size * 40.04, 50, 50)
+    gluSphere(uranus_quadric, planet_size_coefficient * earth_size * 4.04, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(19.2 * earth_distance_from_sun)
@@ -368,7 +393,7 @@ def draw_neptune():
     glRotatef(neptune_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(30.05 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(neptune_rotation, 0.0, 0.0, 1.0)
-    gluSphere(neptune_quadric, earth_size * 30.88, 50, 50)
+    gluSphere(neptune_quadric, planet_size_coefficient * earth_size * 3.88, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(30.05 * earth_distance_from_sun)
@@ -398,7 +423,7 @@ def draw_pluto():
     glRotatef(pluto_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(39.48 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(pluto_rotation, 0.0, 0.0, 1.0)
-    gluSphere(pluto_quadric, earth_size * 10.86, 50, 50)
+    gluSphere(pluto_quadric, planet_size_coefficient * earth_size * 1.86, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(39.48 * earth_distance_from_sun)
@@ -435,7 +460,7 @@ if __name__ == '__main__':
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
     glutInitWindowSize(width, height)
     glutInitWindowPosition(100, 200)
-    glutCreateWindow('Solar system')
+    window = glutCreateWindow('Solar system')
     glutDisplayFunc(display)
     glutIdleFunc(display)
     glutKeyboardFunc(process_keys)
