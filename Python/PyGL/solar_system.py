@@ -65,6 +65,7 @@ def init():
     glClearColor(0.0, 0.0, 0.0, 0.0)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
+    gluPerspective(45.0, 1.33, 0.00001, 100.0)
     textures = glGenTextures(11)
 
 
@@ -73,11 +74,11 @@ def display():
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
-    gluLookAt(x + lx, 1.0, z + lz, x, 0.5, z, 0.0, -1.0, 0.0)
+    gluLookAt(x + lx, 0.5, z + lz, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0)
 
     glPushMatrix()
     glRotatef(ph, 1.0, 0.0, 0.0)
-    glRotatef(th, 0.0, 0.0, 1.0)
+    glRotatef(th, 0.0, 1.0, 0.0)
     glScalef(zoom_in, zoom_in, zoom_in)
     draw_sun()
     draw_planets()
@@ -153,7 +154,7 @@ def draw_mercury():
     glPushMatrix()
     glRotatef(mercury_rotation, 0.0, 0.0, 1.0)
     glTranslatef(0.387 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(mercury_quadric, earth_size * 0.38, 50, 50)
+    gluSphere(mercury_quadric, earth_size * 3.8, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(0.387 * earth_distance_from_sun)
@@ -178,7 +179,7 @@ def draw_venus():
     glPushMatrix()
     glRotatef(venus_rotation, 0.0, 0.0, 1.0)
     glTranslatef(0.723 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(venus_quadric, earth_size * 0.95, 50, 50)
+    gluSphere(venus_quadric, earth_size * 9.5, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(0.723 * earth_distance_from_sun)
@@ -203,7 +204,7 @@ def draw_earth():
     glPushMatrix()
     glRotatef(earth_rotation, 0.0, 0.0, 1.0)
     glTranslatef(earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(earth_quadric, earth_size, 50, 50)
+    gluSphere(earth_quadric, 10 * earth_size, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(earth_distance_from_sun)
@@ -228,12 +229,12 @@ def draw_mars():
     glPushMatrix()
     glRotatef(mars_rotation, 0.0, 0.0, 1.0)
     glTranslatef(1.52 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(mars_quadric, earth_size * 0.52, 50, 50)
+    gluSphere(mars_quadric, earth_size * 5.2, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(1.52 * earth_distance_from_sun)
 
-    mars_rotation += earth_rotation_speed * 1.03
+    mars_rotation += earth_rotation_speed * 11.03
     mars_rotation %= 360
 
 jupiter_rotation = 0.0
@@ -253,7 +254,7 @@ def draw_jupiter():
     glPushMatrix()
     glRotatef(jupiter_rotation, 0.0, 0.0, 1.0)
     glTranslatef(5.20 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(jupiter_quadric, earth_size * 11.20, 50, 50)
+    gluSphere(jupiter_quadric, earth_size * 110.20, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(5.2 * earth_distance_from_sun)
@@ -277,7 +278,7 @@ def draw_saturn():
     glPushMatrix()
     glRotatef(saturn_rotation, 0.0, 0.0, 1.0)
     glTranslatef(9.58 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(saturn_quadric, earth_size * 9.40, 50, 50)
+    gluSphere(saturn_quadric, earth_size * 90.40, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(9.58 * earth_distance_from_sun)
@@ -302,7 +303,7 @@ def draw_uranus():
     glPushMatrix()
     glRotatef(uranus_rotation, 0.0, 0.0, 1.0)
     glTranslatef(19.2 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(uranus_quadric, earth_size * 4.04, 50, 50)
+    gluSphere(uranus_quadric, earth_size * 40.04, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(19.2 * earth_distance_from_sun)
@@ -327,7 +328,7 @@ def draw_neptune():
     glPushMatrix()
     glRotatef(neptune_rotation, 0.0, 0.0, 1.0)
     glTranslatef(30.05 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(neptune_quadric, earth_size * 3.88, 50, 50)
+    gluSphere(neptune_quadric, earth_size * 30.88, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(30.05 * earth_distance_from_sun)
@@ -351,7 +352,7 @@ def draw_pluto():
     glPushMatrix()
     glRotatef(pluto_rotation, 0.0, 0.0, 1.0)
     glTranslatef(39.48 * earth_distance_from_sun, 0.0, 0.0)
-    gluSphere(pluto_quadric, earth_size * 0.186, 50, 50)
+    gluSphere(pluto_quadric, earth_size * 1.86, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(39.48 * earth_distance_from_sun)
@@ -364,17 +365,17 @@ def process_keys(key, xx, yy):
     global th, ph, zoom_in, x, z, lx, lz, camera_angle
 
     if key == GLUT_KEY_LEFT:
-        th -= 5.0
+        th -= 10.0
     elif key == GLUT_KEY_RIGHT:
-        th += 5.0
+        th += 10.0
     elif key == GLUT_KEY_UP:
-        ph += 5.0
+        ph += 10.0
     elif key == GLUT_KEY_DOWN:
-        ph -= 5.0
+        ph -= 10.0
     elif key == 'i':
-        zoom_in += 0.5
+        zoom_in += 0.3
     elif key == 'o':
-        zoom_in -= 0.1
+        zoom_in -= 0.3
 
     if zoom_in <= 0:
         zoom_in = 0.01
