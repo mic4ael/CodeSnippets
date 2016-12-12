@@ -54,8 +54,8 @@ pluto_quadric = gluNewQuadric()
 
 earth_size = 0.0006
 earth_distance_from_sun = 0.150
-earth_orbital_speed = 1.0
-earth_rotation_speed = 1.0
+earth_orbital_speed = 0.01
+earth_rotation_speed = 0.1
 
 
 def init():
@@ -65,7 +65,7 @@ def init():
     glClearColor(0.0, 0.0, 0.0, 0.0)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(45.0, 1.33, 0.00001, 100.0)
+    gluPerspective(30.0, 1.33, 0.00001, 100.0)
     textures = glGenTextures(11)
 
 
@@ -74,7 +74,7 @@ def display():
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
-    gluLookAt(x + lx, 0.5, z + lz, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0)
+    gluLookAt(x + lx, 1.5, z + lz, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0)
 
     glPushMatrix()
     glRotatef(ph, 1.0, 0.0, 0.0)
@@ -118,7 +118,7 @@ def draw_sun():
 
     glPushMatrix()
     glRotatef(sun_rotation, 0.0, 0.0, 1.0)
-    gluSphere(sun_quadric, earth_size * 54, 50, 50)
+    gluSphere(sun_quadric, earth_size * 84, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
 
@@ -138,20 +138,22 @@ def draw_planets():
     draw_pluto()
 
 mercury_rotation = 0.0
+mercury_orbital_rotation = 0.0
 
 
 def draw_mercury():
-    global mercury_rotation
+    global mercury_rotation, mercury_orbital_rotation
 
     mercury_texture_id = textures[1]
     glBindTexture(GL_TEXTURE_2D, mercury_texture_id)
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, mercury_ix, mercury_iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, sun_image)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, mercury_ix, mercury_iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, mercury_image)
     glEnable(GL_TEXTURE_2D)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     gluQuadricTexture(mercury_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(mercury_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(0.387 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(mercury_rotation, 0.0, 0.0, 1.0)
     gluSphere(mercury_quadric, earth_size * 3.8, 50, 50)
@@ -162,11 +164,15 @@ def draw_mercury():
     mercury_rotation += 58.8 * earth_rotation_speed
     mercury_rotation %= 360
 
+    mercury_orbital_rotation += 0.241 * earth_orbital_speed
+    mercury_orbital_rotation %= 360
+
 venus_rotation = 0.0
+venus_orbital_rotation = 0.0
 
 
 def draw_venus():
-    global venus_rotation
+    global venus_rotation, venus_orbital_rotation
 
     venus_texture_id = textures[2]
     glBindTexture(GL_TEXTURE_2D, venus_texture_id)
@@ -177,6 +183,7 @@ def draw_venus():
     gluQuadricTexture(venus_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(venus_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(0.723 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(venus_rotation, 0.0, 0.0, 1.0)
     gluSphere(venus_quadric, earth_size * 9.5, 50, 50)
@@ -187,11 +194,15 @@ def draw_venus():
     venus_rotation += -244 * earth_rotation_speed
     venus_rotation %= 360
 
+    venus_orbital_rotation += 0.615 * earth_orbital_speed
+    venus_orbital_rotation %= 360
+
 earth_rotation = 0.0
+earth_orbital_rotation = 0.0
 
 
 def draw_earth():
-    global earth_rotation
+    global earth_rotation, earth_orbital_rotation
 
     earth_texture_id = textures[3]
     glBindTexture(GL_TEXTURE_2D, earth_texture_id)
@@ -202,6 +213,7 @@ def draw_earth():
     gluQuadricTexture(earth_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(earth_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(earth_distance_from_sun, 0.0, 0.0)
     glRotatef(earth_rotation, 0.0, 0.0, 1.0)
     gluSphere(earth_quadric, 10 * earth_size, 50, 50)
@@ -212,11 +224,15 @@ def draw_earth():
     earth_rotation += earth_rotation_speed
     earth_rotation %= 360
 
+    earth_orbital_rotation += earth_orbital_speed
+    earth_orbital_rotation %= 360.0
+
 mars_rotation = 0.0
+mars_orbital_rotation = 0.0
 
 
 def draw_mars():
-    global mars_rotation
+    global mars_rotation, mars_orbital_rotation
 
     mars_texture_id = textures[4]
     glBindTexture(GL_TEXTURE_2D, mars_texture_id)
@@ -227,6 +243,7 @@ def draw_mars():
     gluQuadricTexture(mars_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(mars_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(1.52 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(mars_rotation, 0.0, 0.0, 1.0)
     gluSphere(mars_quadric, earth_size * 5.2, 50, 50)
@@ -237,11 +254,15 @@ def draw_mars():
     mars_rotation += earth_rotation_speed * 11.03
     mars_rotation %= 360
 
+    mars_orbital_rotation += earth_orbital_speed * 0.0748
+    mars_orbital_rotation %= 360
+
 jupiter_rotation = 0.0
+jupiter_orbital_rotation = 0.0
 
 
 def draw_jupiter():
-    global jupiter_rotation
+    global jupiter_rotation, jupiter_orbital_rotation
 
     jupiter_texture_id = textures[5]
     glBindTexture(GL_TEXTURE_2D, jupiter_texture_id)
@@ -249,12 +270,13 @@ def draw_jupiter():
     glEnable(GL_TEXTURE_2D)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-
     gluQuadricTexture(jupiter_quadric, GL_TRUE)
+
     glPushMatrix()
+    glRotatef(jupiter_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(5.20 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(jupiter_rotation, 0.0, 0.0, 1.0)
-    gluSphere(jupiter_quadric, earth_size * 110.20, 50, 50)
+    gluSphere(jupiter_quadric, earth_size * 100.20, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(5.2 * earth_distance_from_sun)
@@ -262,11 +284,15 @@ def draw_jupiter():
     jupiter_rotation += earth_rotation_speed * 0.415
     jupiter_rotation %= 360
 
+    jupiter_orbital_rotation += earth_orbital_speed * 11.9
+    jupiter_orbital_rotation %= 360
+
 saturn_rotation = 0.0
+saturn_orbital_rotation = 0.0
 
 
 def draw_saturn():
-    global saturn_rotation
+    global saturn_rotation, saturn_orbital_rotation
 
     saturn_texture_id = textures[6]
     glBindTexture(GL_TEXTURE_2D, saturn_texture_id)
@@ -274,8 +300,10 @@ def draw_saturn():
     glEnable(GL_TEXTURE_2D)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    gluQuadricTexture(saturn_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(saturn_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(9.58 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(saturn_rotation, 0.0, 0.0, 1.0)
     gluSphere(saturn_quadric, earth_size * 90.40, 50, 50)
@@ -286,12 +314,16 @@ def draw_saturn():
     saturn_rotation += earth_rotation_speed * 0.445
     saturn_rotation %= 360
 
+    saturn_orbital_rotation += earth_orbital_speed * 29.4
+    saturn_orbital_rotation %= 360
+
 
 uranus_rotation = 0.0
+uranus_orbital_rotation = 0.0
 
 
 def draw_uranus():
-    global uranus_rotation
+    global uranus_rotation, uranus_orbital_rotation
 
     uranus_texture_id = textures[7]
     glBindTexture(GL_TEXTURE_2D, uranus_texture_id)
@@ -299,8 +331,10 @@ def draw_uranus():
     glEnable(GL_TEXTURE_2D)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    gluQuadricTexture(uranus_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(uranus_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(19.2 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(uranus_rotation, 0.0, 0.0, 1.0)
     gluSphere(uranus_quadric, earth_size * 40.04, 50, 50)
@@ -311,12 +345,16 @@ def draw_uranus():
     uranus_rotation += earth_rotation_speed * -0.72
     uranus_rotation %= 360
 
+    uranus_orbital_rotation += earth_orbital_speed * 83.7
+    uranus_orbital_rotation %= 360
+
 
 neptune_rotation = 0.0
+neptune_orbital_rotation = 0.0
 
 
 def draw_neptune():
-    global neptune_rotation
+    global neptune_rotation, neptune_orbital_rotation
 
     neptune_texture_id = textures[8]
     glBindTexture(GL_TEXTURE_2D, neptune_texture_id)
@@ -324,8 +362,10 @@ def draw_neptune():
     glEnable(GL_TEXTURE_2D)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    gluQuadricTexture(neptune_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(neptune_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(30.05 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(neptune_rotation, 0.0, 0.0, 1.0)
     gluSphere(neptune_quadric, earth_size * 30.88, 50, 50)
@@ -336,11 +376,15 @@ def draw_neptune():
     neptune_rotation += earth_rotation_speed * -0.72
     neptune_rotation %= 360
 
+    neptune_orbital_rotation += earth_rotation_speed * 163.7
+    neptune_orbital_rotation %= 360
+
 pluto_rotation = 0.0
+pluto_orbital_rotation = 0.0
 
 
 def draw_pluto():
-    global pluto_rotation
+    global pluto_rotation, pluto_orbital_rotation
 
     pluto_texture_id = textures[9]
     glBindTexture(GL_TEXTURE_2D, pluto_texture_id)
@@ -348,17 +392,22 @@ def draw_pluto():
     glEnable(GL_TEXTURE_2D)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    gluQuadricTexture(pluto_quadric, GL_TRUE)
 
     glPushMatrix()
+    glRotatef(pluto_orbital_rotation, 0.0, 0.0, 1.0)
     glTranslatef(39.48 * earth_distance_from_sun, 0.0, 0.0)
     glRotatef(pluto_rotation, 0.0, 0.0, 1.0)
-    gluSphere(pluto_quadric, earth_size * 1.86, 50, 50)
+    gluSphere(pluto_quadric, earth_size * 10.86, 50, 50)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
     draw_orbit(39.48 * earth_distance_from_sun)
 
     pluto_rotation += earth_rotation_speed * 6.41
     pluto_rotation %= 360
+
+    pluto_orbital_rotation += earth_rotation_speed * 247.9
+    pluto_orbital_rotation %= 360
 
 
 def process_keys(key, xx, yy):
@@ -373,12 +422,12 @@ def process_keys(key, xx, yy):
     elif key == GLUT_KEY_DOWN:
         ph -= 10.0
     elif key == 'i':
-        zoom_in += 0.3
+        zoom_in += 0.1
     elif key == 'o':
-        zoom_in -= 0.3
+        zoom_in -= 0.01
 
     if zoom_in <= 0:
-        zoom_in = 0.01
+        zoom_in = 0.00
 
 
 if __name__ == '__main__':
