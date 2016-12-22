@@ -16,11 +16,14 @@ task exercise4a(type: JavaExec) {
 // gradle exercise4b -Ptype=weak
 // gradle exercise4b -Ptype=phantom
 task exercise4b(type: JavaExec) {
-    if (project.hasProperty('type')){
+    if (project.hasProperty('type')) {
         args(type)
     }
 
-    maxHeapSize = "2m"
+    if (type == "soft") {
+        maxHeapSize = "2m"
+    }
+
     main = 'pl.dmcs.ptoish.exercise4.Exercise4b'
     classpath = sourceSets.main.runtimeClasspath
 }
