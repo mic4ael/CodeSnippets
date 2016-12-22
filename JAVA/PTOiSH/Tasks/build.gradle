@@ -6,6 +6,10 @@ repositories() {
     jcenter()
 }
 
+task exercise3b(type: JavaExec) {
+    main = 'pl.dmcs.ptoish.exercise3.Exercise3b'
+    classpath = sourceSets.main.runtimeClasspath
+}
 
 task exercise4a(type: JavaExec) {
     main = 'pl.dmcs.ptoish.exercise4.Exercise4a'
