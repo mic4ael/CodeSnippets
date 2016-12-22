@@ -65,7 +65,29 @@ class Exercise4b {
     }
 
     private static void testPhantomReferences() {
+        Integer phantomInt = new Integer(20);
+        ReferenceQueue rq = new ReferenceQueue();
+        PhantomReference<Integer> phantomReference = new PhantomReference<Integer>(phantomInt, rq);
+        Reference r = null;
+        Random random = new Random();
 
+        System.out.println();
+        try {
+            while ((r = rq.remove(1000)) == null) {
+                printProgress("\rTesting PhantomReference");
+
+                if (random.nextInt(10) >= 8) {
+                    System.out.println("\nSetting phantomInt to null");
+                    phantomInt = null;
+                }
+
+                System.gc();
+            }
+        } catch (InterruptedException ex) {}
+
+        System.out.println("phantomInt could be reclaimed and a reference has been enqueued");
+        System.out.println("Enqueued reference: " + r);
+        System.out.println("phantomInt was phantom reachable");
     }
 
     public static void main(String []args) {

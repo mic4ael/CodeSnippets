@@ -18,10 +18,10 @@ task exercise4a(type: JavaExec) {
 task exercise4b(type: JavaExec) {
     if (project.hasProperty('type')) {
         args(type)
-    }
 
-    if (type == "soft") {
-        maxHeapSize = "2m"
+        if (type == "soft") {
+            maxHeapSize = "2m"
+        }
     }
 
     main = 'pl.dmcs.ptoish.exercise4.Exercise4b'
