@@ -16,7 +16,7 @@ public class BenchmarkRunner {
     public void runBenchmarks() {
         List<Class<?>> packageClasses = ClassFinder.find(this.packageName);
 
-        for (Class klass : packageClasses) {
+        for (Class<?> klass : packageClasses) {
             if (klass.isAnnotationPresent(BenchmarkClass.class)) {
                 BenchmarkClass benchmarkClassAnnotation = (BenchmarkClass) klass.getAnnotation(BenchmarkClass.class);
                 System.out.println("Processing " + klass.getName());
