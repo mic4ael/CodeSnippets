@@ -5,10 +5,15 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.MappedByteBuffer;
+import pl.dmcs.ptoish.benchmarking.*;
 
-class ChannelBufferRead {
+@BenchmarkClass(description="Testing file read via NIO channels/buffers")
+public class ChannelBufferRead {
     static int MB = 1024 * 1024;
 
+    public ChannelBufferRead() {}
+
+    @BenchmarkMethod(numberOfIterations=5, arguments={"random_data.txt"})
     public static void read(String filename) {
         RandomAccessFile file = null;
         FileChannel fileChannel = null;
@@ -19,12 +24,10 @@ class ChannelBufferRead {
             fileChannel = file.getChannel();
             byteBuffer = ByteBuffer.allocate(ChannelBufferRead.MB);
 
-            System.out.println("Reading the file using channels/buffers");
             while (fileChannel.read(byteBuffer) > 0) {
                 byteBuffer = ByteBuffer.allocate(ChannelBufferRead.MB);
                 byteBuffer.clear();
             }
-            System.out.println("Finished");
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {

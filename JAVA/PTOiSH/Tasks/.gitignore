@@ -1,3 +1,4 @@
 *.ext
 *.ser
 random_data.txt
+build/
