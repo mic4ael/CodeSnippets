@@ -40,18 +40,17 @@ public class BenchmarkRunner {
 
                         try {
                             long totalTime = 0;
-                            DecimalFormat df = new DecimalFormat();
-                            df.setMaximumFractionDigits(5);
-                            df.setMinimumFractionDigits(3);
+                            DecimalFormat df = new DecimalFormat("#0.000000000");
+                            System.out.println("Running " + method.getName());
                             for (int i = 0; i < benchmarkMethodAnnotation.numberOfIterations(); ++i) {
-                                long start = System.currentTimeMillis();
+                                long start = System.nanoTime();
                                 if (Modifier.isStatic(method.getModifiers())) {
                                     method.invoke(null, (Object[]) benchmarkMethodAnnotation.arguments());
                                 } else {
                                     method.invoke(klass.newInstance(), (Object[]) benchmarkMethodAnnotation.arguments());
                                 }
-                                long end = System.currentTimeMillis() - start;
-                                String message = "Iteration #" + (i + 1) + ", it took: " + (df.format(end / 1000.0)) + "s";
+                                long end = System.nanoTime() - start;
+                                String message = "Iteration #" + (i + 1) + ", it took: " + df.format((double) (end / 1000000000.0)) + "s";
                                 if (writer != null) {
                                     writer.write(message + System.lineSeparator());
                                 }
@@ -62,7 +61,7 @@ public class BenchmarkRunner {
                             }
 
                             System.out.println();
-                            System.out.println("Average time: " + (totalTime / benchmarkMethodAnnotation.numberOfIterations() / 1000.0) + "s");
+                            System.out.println("Average time: " + (df.format(totalTime / 1000000000.0 / benchmarkMethodAnnotation.numberOfIterations())) + "s");
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         } finally {

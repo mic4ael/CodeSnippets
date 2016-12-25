@@ -16,6 +16,11 @@ task exercise1b(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task exercise2sets(type: JavaExec) {
+    main = 'pl.dmcs.ptoish.exercise2.sets.Exercise2Sets'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task exercise3a(type: JavaExec) {
     main = 'pl.dmcs.ptoish.exercise3.Exercise3a'
     classpath = sourceSets.main.runtimeClasspath
