@@ -1,8 +1,13 @@
 package pl.dmcs.ptoish.benchmarking;
 
-import java.lang.annotation.Annotation;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.lang.reflect.*;
 import java.util.*;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 import pl.dmcs.ptoish.ClassFinder;
 
 
@@ -25,9 +30,15 @@ public class BenchmarkRunner {
                 for (Method method : klass.getDeclaredMethods()) {
                     if (method.isAnnotationPresent(BenchmarkMethod.class)) {
                         BenchmarkMethod benchmarkMethodAnnotation = (BenchmarkMethod) method.getAnnotation(BenchmarkMethod.class);
+                        BufferedWriter writer = null;
+                        try {
+                            if (benchmarkMethodAnnotation.logfile() != null && !"".equals(benchmarkMethodAnnotation.logfile())) {
+                                writer = new BufferedWriter(new FileWriter(benchmarkMethodAnnotation.logfile()));
+                            }
+                        } catch (Exception ex) {}
+
                         try {
                             long totalTime = 0;
-
                             for (int i = 0; i < benchmarkMethodAnnotation.numberOfIterations(); ++i) {
                                 long start = System.currentTimeMillis();
                                 if (Modifier.isStatic(method.getModifiers())) {
@@ -36,13 +47,26 @@ public class BenchmarkRunner {
                                     method.invoke(klass.newInstance(), (Object[]) benchmarkMethodAnnotation.arguments());
                                 }
                                 long end = System.currentTimeMillis() - start;
-                                System.out.println("Iteration #" + (i + 1) + ", it took: " + (end / 1000.0) + "s");
+                                String message = "Iteration #" + (i + 1) + ", it took: " + (end / 1000.0) + "s";
+                                if (writer != null) {
+                                    writer.write(message + System.lineSeparator());
+                                }
+
+                                System.out.print("\033[2K");
+                                System.out.print(message + "\r");
                                 totalTime += end;
                             }
 
+                            System.out.println();
                             System.out.println("Average time: " + (totalTime / benchmarkMethodAnnotation.numberOfIterations() / 1000.0) + "s");
                         } catch (Exception ex) {
                             ex.printStackTrace();
+                        } finally {
+                            try {
+                                if (writer != null) {
+                                    writer.close();
+                                }
+                            } catch (Exception ex) {}
                         }
                         
                         System.out.println();
