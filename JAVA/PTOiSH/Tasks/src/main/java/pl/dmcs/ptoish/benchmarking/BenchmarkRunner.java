@@ -39,14 +39,26 @@ public class BenchmarkRunner {
                         try {
                             long totalTime = 0;
                             DecimalFormat df = new DecimalFormat("#0.000000000");
-                            System.out.println("Running " + method.getName());
+                            System.out.println("Running " + klass.getName() + "." + method.getName());
+                            Method setupMethod = null;
+
+                            if (benchmarkMethodAnnotation.setupMethod() != null && !"".equals(benchmarkMethodAnnotation.setupMethod())) {
+                                setupMethod = klass.getDeclaredMethod(benchmarkMethodAnnotation.setupMethod());
+                                setupMethod.setAccessible(true);
+                            }
+                            
                             for (int i = 0; i < benchmarkMethodAnnotation.numberOfIterations(); ++i) {
                                 long start = System.nanoTime();
+                                if (setupMethod != null && Modifier.isStatic(setupMethod.getModifiers())) {
+                                    setupMethod.invoke(null);
+                                }
+
                                 if (Modifier.isStatic(method.getModifiers())) {
                                     method.invoke(null, (Object[]) benchmarkMethodAnnotation.arguments());
                                 } else {
                                     method.invoke(klass.newInstance(), (Object[]) benchmarkMethodAnnotation.arguments());
                                 }
+
                                 long end = System.nanoTime() - start;
                                 String message = "Iteration #" + (i + 1) + ", it took: " + df.format((double) (end / 1000000000.0)) + "s";
                                 if (writer != null) {
@@ -54,7 +66,7 @@ public class BenchmarkRunner {
                                 }
 
                                 System.out.print("\033[2K");
-                                System.out.print(message + "\r");
+                                System.out.print("\r" + message);
                                 totalTime += end;
                             }
 

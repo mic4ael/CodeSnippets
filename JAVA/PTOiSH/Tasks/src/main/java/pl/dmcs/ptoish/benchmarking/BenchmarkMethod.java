@@ -11,4 +11,5 @@ public @interface BenchmarkMethod {
 	public int numberOfIterations() default 1;
 	public String[] arguments() default {};
 	public String logfile() default "";
+	public String setupMethod() default "";
 }

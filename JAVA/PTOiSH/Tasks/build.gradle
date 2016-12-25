@@ -21,6 +21,11 @@ task exercise2sets(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task exercise2listsandqueues(type: JavaExec) {
+    main = 'pl.dmcs.ptoish.exercise2.queuesandlists.Exercise2ListsAndQueues'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task exercise3a(type: JavaExec) {
     main = 'pl.dmcs.ptoish.exercise3.Exercise3a'
     classpath = sourceSets.main.runtimeClasspath
