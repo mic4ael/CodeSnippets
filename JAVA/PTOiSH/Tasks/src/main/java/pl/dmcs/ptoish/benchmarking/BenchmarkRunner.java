@@ -3,6 +3,7 @@ package pl.dmcs.ptoish.benchmarking;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.lang.reflect.*;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -39,6 +40,9 @@ public class BenchmarkRunner {
 
                         try {
                             long totalTime = 0;
+                            DecimalFormat df = new DecimalFormat();
+                            df.setMaximumFractionDigits(5);
+                            df.setMinimumFractionDigits(3);
                             for (int i = 0; i < benchmarkMethodAnnotation.numberOfIterations(); ++i) {
                                 long start = System.currentTimeMillis();
                                 if (Modifier.isStatic(method.getModifiers())) {
@@ -47,7 +51,7 @@ public class BenchmarkRunner {
                                     method.invoke(klass.newInstance(), (Object[]) benchmarkMethodAnnotation.arguments());
                                 }
                                 long end = System.currentTimeMillis() - start;
-                                String message = "Iteration #" + (i + 1) + ", it took: " + (end / 1000.0) + "s";
+                                String message = "Iteration #" + (i + 1) + ", it took: " + (df.format(end / 1000.0)) + "s";
                                 if (writer != null) {
                                     writer.write(message + System.lineSeparator());
                                 }

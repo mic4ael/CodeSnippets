@@ -10,6 +10,12 @@ import pl.dmcs.ptoish.benchmarking.BenchmarkMethod;
 public class HashMapCacheBenchmark {
     private static HashMapCache cache = HashMapCache.getInstance();
 
+    static {
+        for (int i = 0; i < 9999999; i++) {
+            cache.put("test" + i, new int[10]);
+        }
+    }
+
     @BenchmarkMethod(numberOfIterations=1000, logfile="cache_put.txt")
     public static void writingToCacheBenchmar() {
         cache.put("test", 123456);

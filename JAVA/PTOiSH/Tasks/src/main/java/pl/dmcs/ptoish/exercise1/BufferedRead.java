@@ -12,7 +12,7 @@ public class BufferedRead {
 
     public BufferedRead() {}
 
-    @BenchmarkMethod(numberOfIterations=5, arguments={"random_data.txt"})
+    @BenchmarkMethod(numberOfIterations=5, arguments={"random_data.txt"}, logfile="buffered_read_benchmarks.txt")
     public static void read(String filename) {
         BufferedInputStream bis = null;
         FileInputStream fis = null;
