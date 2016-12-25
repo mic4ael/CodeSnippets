@@ -6,8 +6,6 @@ import java.lang.reflect.*;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 
 import pl.dmcs.ptoish.ClassFinder;
 
